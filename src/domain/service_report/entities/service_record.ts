@@ -3,11 +3,15 @@ import { Publisher } from "./publisher";
 import { v4 as uuidv4 } from "uuid";
 
 type ServiceRecordProps = {
-  bibleStudies: number;
-  creditHours: number;
-  serviceHours: number;
+  id?: string;
+  creditHours?: number;
+  serviceHours?: number;
   comments?: string;
+  bibleStudies: number;
   serviceMonth: Date;
+  publisher?: Publisher;
+  isResolved?: boolean;
+  createdAt?: Date;
 };
 
 export class ServiceRecord {
@@ -21,14 +25,24 @@ export class ServiceRecord {
   serviceHours?: number;
   comments?: string;
 
-  private constructor(input: ServiceRecordProps) {
-    this.id = uuidv4();
+  private constructor(input: {
+    id?: string;
+    bibleStudies: number;
+    creditHours?: number;
+    serviceHours?: number;
+    comments?: string;
+    serviceMonth: Date;
+    publisher?: Publisher;
+    isResolved?: boolean;
+    createdAt?: Date;
+  }) {
+    this.id = input.id ?? uuidv4();
     this.bibleStudies = input.bibleStudies;
     this.creditHours = input.creditHours;
     this.serviceHours = input.serviceHours;
     this.comments = input.comments;
-    this.isResolved = false;
-    this.createdAt = new Date();
+    this.isResolved = input.isResolved ?? false;
+    this.createdAt = input.createdAt ?? new Date();
     this.serviceMonth = new Month(input.serviceMonth);
   }
 
@@ -43,6 +57,10 @@ export class ServiceRecord {
 
     if (input.serviceHours && input.serviceHours < 0) {
       throw new Error("Service hours cannot be negative");
+    }
+
+    if (!input.serviceMonth) {
+      throw new Error("Service month is required");
     }
 
     return new ServiceRecord(input);

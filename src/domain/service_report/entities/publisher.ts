@@ -1,9 +1,12 @@
 import { v4 as uuidv4 } from "uuid";
+
 type PublisherProps = {
+  id?: string;
   firstName: string;
   lastName: string;
   email?: string;
   phoneNumber?: string;
+  createdAt?: Date;
 };
 
 export class Publisher {
@@ -15,12 +18,12 @@ export class Publisher {
   createdAt: Date;
 
   private constructor(input: PublisherProps) {
-    this.id = uuidv4();
+    this.id = input.id ?? uuidv4();
     this.firstName = input.firstName;
     this.lastName = input.lastName;
     this.email = input.email;
     this.phoneNumber = input.phoneNumber;
-    this.createdAt = new Date();
+    this.createdAt = input.createdAt ?? new Date();
   }
 
   static create(input: PublisherProps): Publisher {
