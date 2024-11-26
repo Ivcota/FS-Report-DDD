@@ -30,6 +30,17 @@ export class Publisher {
     if (!input.firstName || !input.lastName) {
       throw new Error("First and last name are required");
     }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (input.email && !emailRegex.test(input.email)) {
+      throw new Error("Invalid email format");
+    }
+
+    input.firstName = input.firstName.trim();
+    input.lastName = input.lastName.trim();
+    input.email = input.email?.trim();
+    input.phoneNumber = input.phoneNumber?.trim();
+
     return new Publisher(input);
   }
 }

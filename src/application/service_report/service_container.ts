@@ -1,7 +1,14 @@
-class ServiceContainer {
-  private static instance: ServiceContainer;
+import { PrismaClient } from "@prisma/client";
+import { ServiceRecordRepository } from "@/infrastructure/repositories/service_record_repository";
 
-  private constructor() {}
+export class ServiceContainer {
+  private static instance: ServiceContainer;
+  serviceRecordRepository: ServiceRecordRepository;
+
+  private constructor() {
+    const prisma = new PrismaClient();
+    this.serviceRecordRepository = new ServiceRecordRepository(prisma);
+  }
 
   static getInstance(): ServiceContainer {
     if (!ServiceContainer.instance) {

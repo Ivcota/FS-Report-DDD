@@ -9,9 +9,9 @@ type ServiceRecordProps = {
   comments?: string;
   bibleStudies: number;
   serviceMonth: Date;
-  publisher?: Publisher;
   isResolved?: boolean;
   createdAt?: Date;
+  publisher?: Publisher;
 };
 
 export class ServiceRecord {
@@ -44,6 +44,7 @@ export class ServiceRecord {
     this.isResolved = input.isResolved ?? false;
     this.createdAt = input.createdAt ?? new Date();
     this.serviceMonth = new Month(input.serviceMonth);
+    this.publisher = input.publisher ?? undefined;
   }
 
   static create(input: ServiceRecordProps): ServiceRecord {
