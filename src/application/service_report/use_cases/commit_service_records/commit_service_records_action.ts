@@ -32,7 +32,6 @@ export const commitServiceRecordsAction = async (
     const temp = JSON.parse(serviceRecords.toString());
     serviceRecordsParsed = CommitServiceRecordsSchema.parse(temp);
   } catch (error) {
-    console.log(error);
     return {
       success: false,
       error: `Failed to parse service records: ${JSON.stringify(error)}`,
@@ -42,8 +41,6 @@ export const commitServiceRecordsAction = async (
   const result = await commitServiceRecordsUseCase.execute({
     serviceRecords: serviceRecordsParsed,
   });
-
-  console.log(result);
 
   return { success: result.success, error: result.error };
 };

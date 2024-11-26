@@ -8,7 +8,7 @@ import { commitServiceRecordsAction } from "@/application/service_report/use_cas
 import { parseServiceRecordsAction } from "@/application/service_report/use_cases/parse_service_records/parse_service_records_action";
 import { useActionState } from "react";
 
-export default function Home() {
+export default function ServiceReportParser() {
   const [result, parseServiceRecord, isLoading] = useActionState(
     parseServiceRecordsAction,
     {
@@ -49,6 +49,12 @@ export default function Home() {
               {isCommitting ? "Committing..." : "Commit Service Records"}
             </button>
           </form>
+
+          {!!commitServiceRecordsResult.error && (
+            <ServiceRecordParserError
+              error={commitServiceRecordsResult.error}
+            />
+          )}
 
           {result.serviceRecords.length > 0 && (
             <ServiceRecordList serviceRecords={result.serviceRecords} />
