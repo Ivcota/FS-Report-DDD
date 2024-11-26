@@ -1,12 +1,8 @@
 "use server";
 
-import {
-  ParseServiceRecordsUseCase,
-  ParseServiceRecordsUseCaseOutput,
-} from "./parse_service_records_use_case";
-
+import { ParseServiceRecordsUseCase } from "./parse_service_records_use_case";
 import { ServiceContainer } from "../../service_container";
-import { ServiceRecord } from "@/domain/service_report/entities/service_record";
+import { SimplifiedServiceRecord } from "./parse-service_records_dto";
 
 const serviceContainer = ServiceContainer.getInstance();
 const parseServiceRecordsUseCase = new ParseServiceRecordsUseCase(
@@ -14,7 +10,7 @@ const parseServiceRecordsUseCase = new ParseServiceRecordsUseCase(
 );
 
 type ActionState = {
-  serviceRecords: any;
+  serviceRecords: SimplifiedServiceRecord[];
   error?: string;
 };
 
@@ -33,7 +29,7 @@ export const parseServiceRecordsAction = async (
   });
 
   return {
-    serviceRecords: JSON.stringify(serviceRecords),
+    serviceRecords: serviceRecords,
     error,
   };
 };

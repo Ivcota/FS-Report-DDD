@@ -1,17 +1,13 @@
+import {
+  ParseServiceRecordsUseCaseInputDTO,
+  ParseServiceRecordsUseCaseOutput,
+} from "./parse-service_records_dto";
+
 import { AIService } from "@/infrastructure/external_services/ai";
 import { PreviewRecordListSchema } from "@/domain/service_report/value_objects/preview_record";
 import { PreviewRecordMapper } from "@/domain/service_report/mapper/preview_record_mapper";
-import { ServiceRecord } from "@/domain/service_report/entities/service_record";
+import { ServiceRecordMapper } from "../../mappers/service_record_mapper";
 import { UseCase } from "@/shared/use_case";
-
-type ParseServiceRecordsUseCaseInputDTO = {
-  rawString: string;
-};
-
-export type ParseServiceRecordsUseCaseOutput = {
-  serviceRecords: ServiceRecord[];
-  error?: string;
-};
 
 export class ParseServiceRecordsUseCase
   implements
@@ -44,13 +40,13 @@ export class ParseServiceRecordsUseCase
         `,
         }
       );
-
       const serviceRecords = response.records.map(
         PreviewRecordMapper.toServiceRecord
       );
-
       return {
-        serviceRecords,
+        serviceRecords: serviceRecords.map(
+          ServiceRecordMapper.toSimplifiedServiceRecord
+        ),
       };
     } catch (error) {
       return {

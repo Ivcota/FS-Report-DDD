@@ -5,6 +5,7 @@ import {
 
 import { Publisher } from "@/domain/service_report/entities/publisher";
 import { ServiceRecord } from "@/domain/service_report/entities/service_record";
+import { SimplifiedServiceRecord } from "../use_cases/parse_service_records/parse-service_records_dto";
 
 export class ServiceRecordMapper {
   static toPersistence(serviceRecord: ServiceRecord): PrismaServiceRecord {
@@ -45,5 +46,22 @@ export class ServiceRecordMapper {
           })
         : undefined,
     });
+  }
+
+  static toSimplifiedServiceRecord(
+    serviceRecord: ServiceRecord
+  ): SimplifiedServiceRecord {
+    return {
+      id: serviceRecord.id,
+      firstName: serviceRecord.publisher?.firstName ?? "",
+      lastName: serviceRecord.publisher?.lastName ?? "",
+      serviceMonth: serviceRecord.serviceMonth.monthStart.toString(),
+      createdAt: serviceRecord.createdAt.toISOString(),
+      bibleStudies: serviceRecord.bibleStudies,
+      isResolved: serviceRecord.isResolved,
+      creditHours: serviceRecord.creditHours ?? undefined,
+      serviceHours: serviceRecord.serviceHours ?? undefined,
+      comments: serviceRecord.comments ?? undefined,
+    };
   }
 }
