@@ -17,11 +17,6 @@ export class PreviewRecordMapper {
       "MMMM YYYY"
     ).toDate();
 
-    console.log({
-      before: previewRecord.serviceMonth,
-      after: serviceMonth,
-    });
-
     return ServiceRecord.create({
       bibleStudies: previewRecord.bibleStudies ?? 0,
       serviceMonth,

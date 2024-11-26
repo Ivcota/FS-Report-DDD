@@ -49,7 +49,6 @@ export class ParseServiceRecordsUseCase
         PreviewRecordMapper.toServiceRecord
       );
 
-      console.log(serviceRecords);
       return {
         serviceRecords: serviceRecords.map(
           ServiceRecordMapper.toSimplifiedServiceRecord
