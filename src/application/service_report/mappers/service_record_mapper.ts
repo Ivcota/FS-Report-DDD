@@ -55,7 +55,7 @@ export class ServiceRecordMapper {
       id: serviceRecord.id,
       firstName: serviceRecord.publisher?.firstName ?? "",
       lastName: serviceRecord.publisher?.lastName ?? "",
-      serviceMonth: serviceRecord.serviceMonth.monthStart.toString(),
+      serviceMonth: serviceRecord.serviceMonth.monthStart.toISOString(),
       createdAt: serviceRecord.createdAt.toISOString(),
       bibleStudies: serviceRecord.bibleStudies,
       isResolved: serviceRecord.isResolved,

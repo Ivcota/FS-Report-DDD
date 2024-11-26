@@ -48,6 +48,8 @@ export class ParseServiceRecordsUseCase
       const serviceRecords = response.records.map(
         PreviewRecordMapper.toServiceRecord
       );
+
+      console.log(serviceRecords);
       return {
         serviceRecords: serviceRecords.map(
           ServiceRecordMapper.toSimplifiedServiceRecord
