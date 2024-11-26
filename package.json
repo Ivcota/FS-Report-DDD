@@ -6,12 +6,17 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "vitest",
+    "test:watch": "vitest watch",
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "next": "15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-dom": "19.0.0-rc-66855b96-20241106",
-    "next": "15.0.3"
+    "uuid": "^11.0.3",
+    "vitest": "^2.1.5"
   },
   "devDependencies": {
     "typescript": "^5",
