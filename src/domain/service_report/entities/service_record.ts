@@ -1,4 +1,5 @@
 import { Month } from "../value_objects/month";
+import { Publisher } from "./publisher";
 import { v4 as uuidv4 } from "uuid";
 
 type ServiceRecordProps = {
@@ -15,6 +16,7 @@ export class ServiceRecord {
   createdAt: Date;
   bibleStudies: number;
   isResolved: boolean;
+  publisher?: Publisher;
   creditHours?: number;
   serviceHours?: number;
   comments?: string;
@@ -44,5 +46,17 @@ export class ServiceRecord {
     }
 
     return new ServiceRecord(input);
+  }
+
+  assignPublisher(publisher: Publisher): void {
+    this.publisher = publisher;
+  }
+
+  resolve(): void {
+    this.isResolved = true;
+  }
+
+  unresolve(): void {
+    this.isResolved = false;
   }
 }
