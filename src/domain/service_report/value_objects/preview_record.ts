@@ -10,4 +10,6 @@ export const PreviewRecordSchema = z.object({
   comments: z.string().optional(),
 });
 
+export const PreviewRecordListSchema = z.array(PreviewRecordSchema);
+
 export type PreviewRecord = z.infer<typeof PreviewRecordSchema>;
