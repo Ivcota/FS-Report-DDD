@@ -1,7 +1,6 @@
-import { IServiceRecordRepository } from "./repo_types";
+import { IServiceRecordRepository } from "@/domain/service_report/ports/service_record_repository";
 import { Month } from "@/domain/service_report/value_objects/month";
 import { PrismaClient } from "@prisma/client";
-import { Publisher } from "@/domain/service_report/entities/publisher";
 import { PublisherMapper } from "@/application/service_report/mappers/publisher_mapper";
 import { ServiceRecord } from "@/domain/service_report/entities/service_record";
 import { ServiceRecordMapper } from "@/application/service_report/mappers/service_record_mapper";
