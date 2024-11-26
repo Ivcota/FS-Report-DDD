@@ -40,6 +40,7 @@ export default function ServiceReportParser() {
             commitServiceRecords={commitServiceRecords}
             isCommitting={isCommitting}
             serviceRecords={result.serviceRecords}
+            success={commitServiceRecordsResult.success}
           />
 
           {!!commitServiceRecordsResult.error && (

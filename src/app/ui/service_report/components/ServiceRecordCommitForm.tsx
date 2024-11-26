@@ -1,14 +1,35 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 type ServiceRecordCommitFormProps = {
   commitServiceRecords: (formData: FormData) => void;
   isCommitting: boolean;
   serviceRecords: unknown[];
+  success: boolean;
 };
 
 export function ServiceRecordCommitForm({
   commitServiceRecords,
   isCommitting,
   serviceRecords,
+  success,
 }: ServiceRecordCommitFormProps) {
+  const [localSuccess, setLocalSuccess] = useState(false);
+
+  const displaySuccess = () => {
+    setLocalSuccess(true);
+    setTimeout(() => {
+      setLocalSuccess(false);
+    }, 3000);
+  };
+
+  useEffect(() => {
+    if (success) {
+      displaySuccess();
+    }
+  }, [success]);
+
   return (
     <form action={commitServiceRecords}>
       <input
@@ -23,6 +44,10 @@ export function ServiceRecordCommitForm({
       >
         {isCommitting ? "Committing..." : "Commit Service Records"}
       </button>
+
+      {localSuccess && (
+        <p className="text-green-500">Service records committed successfully</p>
+      )}
     </form>
   );
 }
