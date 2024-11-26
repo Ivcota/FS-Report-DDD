@@ -26,11 +26,28 @@ export class ServiceRecordRepository implements IServiceRecordRepository {
     let publisherId = serviceRecord.publisher?.id;
 
     if (serviceRecord.publisher) {
-      const existingPublisher = await this.prisma.publisher.findUnique({
+      let existingPublisher = await this.prisma.publisher.findUnique({
         where: { id: serviceRecord.publisher.id },
       });
 
       if (!existingPublisher) {
+        existingPublisher = await this.prisma.publisher.findFirst({
+          where: {
+            firstName: {
+              equals: serviceRecord.publisher.firstName,
+              mode: "insensitive",
+            },
+            lastName: {
+              equals: serviceRecord.publisher.lastName,
+              mode: "insensitive",
+            },
+          },
+        });
+      }
+
+      if (existingPublisher) {
+        publisherId = existingPublisher.id;
+      } else {
         const newPublisher = await this.prisma.publisher.create({
           data: PublisherMapper.toPersistence(serviceRecord.publisher),
         });
