@@ -1,12 +1,17 @@
-import {
-  ParseServiceRecordsUseCaseInputDTO,
-  ParseServiceRecordsUseCaseOutput,
-} from "./dtos";
-
 import { AIService } from "@/infrastructure/external_services/ai";
 import { PreviewRecordListSchema } from "@/domain/service_report/value_objects/preview_record";
 import { PreviewRecordMapper } from "@/domain/service_report/mapper/preview_record_mapper";
+import { ServiceRecord } from "@/domain/service_report/entities/service_record";
 import { UseCase } from "@/shared/use_case";
+
+type ParseServiceRecordsUseCaseInputDTO = {
+  rawString: string;
+};
+
+export type ParseServiceRecordsUseCaseOutput = {
+  serviceRecords: ServiceRecord[];
+  error?: string;
+};
 
 export class ParseServiceRecordsUseCase
   implements

@@ -6,21 +6,34 @@ import {
 } from "./parse_service_records_use_case";
 
 import { ServiceContainer } from "../../service_container";
+import { ServiceRecord } from "@/domain/service_report/entities/service_record";
 
 const serviceContainer = ServiceContainer.getInstance();
 const parseServiceRecordsUseCase = new ParseServiceRecordsUseCase(
   serviceContainer.aiService
 );
 
+type ActionState = {
+  serviceRecords: ServiceRecord[];
+  error?: string;
+};
+
 export const parseServiceRecordsAction = async (
-  _prevState: ParseServiceRecordsUseCaseOutput,
+  _prevState: ActionState,
   formData: FormData
-): Promise<ParseServiceRecordsUseCaseOutput> => {
+): Promise<ActionState> => {
   const rawString = formData.get("unparsedRecords")?.toString();
 
   if (!rawString) {
     return { error: "No raw string provided", serviceRecords: [] };
   }
 
-  return parseServiceRecordsUseCase.execute({ rawString });
+  const { serviceRecords, error } = await parseServiceRecordsUseCase.execute({
+    rawString,
+  });
+
+  return {
+    serviceRecords,
+    error,
+  };
 };
