@@ -14,6 +14,13 @@ type ServiceRecordProps = {
   publisher?: Publisher;
 };
 
+/**
+ * ServiceRecord Aggregate Root
+ *
+ * Represents a monthly service report submitted by a publisher.
+ * Acts as the aggregate root for the service report bounded context,
+ * maintaining consistency and enforcing business rules around service reporting.
+ */
 export class ServiceRecord {
   id: string;
   serviceMonth: Month;

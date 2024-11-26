@@ -6,6 +6,7 @@ import {
 import { Publisher } from "@/domain/service_report/entities/publisher";
 import { ServiceRecord } from "@/domain/service_report/entities/service_record";
 import { SimplifiedServiceRecord } from "../use_cases/parse_service_records/parse-service_records_dto";
+import { v4 as uuidv4 } from "uuid";
 
 export class ServiceRecordMapper {
   static toPersistence(serviceRecord: ServiceRecord): PrismaServiceRecord {
@@ -45,6 +46,30 @@ export class ServiceRecordMapper {
             createdAt: publisher.createdAt ?? undefined,
           })
         : undefined,
+    });
+  }
+
+  static toEmptyDomain(
+    publisher: PrismaPublisher,
+    date: Date = new Date()
+  ): ServiceRecord {
+    return ServiceRecord.create({
+      id: uuidv4(),
+      bibleStudies: 0,
+      serviceMonth: date,
+      creditHours: undefined,
+      serviceHours: undefined,
+      comments: undefined,
+      isResolved: false,
+      createdAt: date,
+      publisher: Publisher.create({
+        id: publisher.id,
+        firstName: publisher.firstName,
+        lastName: publisher.lastName,
+        email: publisher.email ?? undefined,
+        phoneNumber: publisher.phoneNumber ?? undefined,
+        createdAt: publisher.createdAt ?? undefined,
+      }),
     });
   }
 
