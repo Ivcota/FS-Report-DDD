@@ -1,5 +1,6 @@
 "use client";
 
+import { ServiceRecordCommitForm } from "@/app/ui/service_report/components/ServiceRecordCommitForm";
 import { ServiceRecordForm } from "@/app/ui/service_report/components/ServiceRecordForm";
 import { ServiceRecordList } from "@/app/ui/service_report/components/ServiceRecordList";
 import { ServiceRecordParserError } from "@/app/ui/service_report/components/ServiceRecordParserError";
@@ -35,20 +36,11 @@ export default function ServiceReportParser() {
 
           {!!result.error && <ServiceRecordParserError error={result.error} />}
 
-          <form action={commitServiceRecords}>
-            <input
-              type="hidden"
-              name="serviceRecords"
-              value={JSON.stringify(result.serviceRecords)}
-            />
-            <button
-              type="submit"
-              disabled={isCommitting || result.serviceRecords.length === 0}
-              className="mt-4 w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:bg-gray-400"
-            >
-              {isCommitting ? "Committing..." : "Commit Service Records"}
-            </button>
-          </form>
+          <ServiceRecordCommitForm
+            commitServiceRecords={commitServiceRecords}
+            isCommitting={isCommitting}
+            serviceRecords={result.serviceRecords}
+          />
 
           {!!commitServiceRecordsResult.error && (
             <ServiceRecordParserError
