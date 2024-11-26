@@ -12,6 +12,7 @@ export const PreviewRecordSchema = z.object({
 
 export const PreviewRecordListSchema = z.object({
   records: z.array(PreviewRecordSchema),
+  error: z.string(),
 });
 
 export type PreviewRecord = z.infer<typeof PreviewRecordSchema>;

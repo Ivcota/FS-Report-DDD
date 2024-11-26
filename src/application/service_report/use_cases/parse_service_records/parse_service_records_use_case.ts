@@ -40,6 +40,11 @@ export class ParseServiceRecordsUseCase
         `,
         }
       );
+
+      if (response.error) {
+        throw new Error(response.error);
+      }
+
       const serviceRecords = response.records.map(
         PreviewRecordMapper.toServiceRecord
       );
