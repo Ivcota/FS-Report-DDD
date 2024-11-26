@@ -18,4 +18,5 @@ export type SimplifiedServiceRecord = {
   creditHours?: number;
   serviceHours?: number;
   comments?: string;
+  placeholder?: boolean;
 };

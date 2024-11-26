@@ -12,6 +12,7 @@ type ServiceRecordProps = {
   isResolved?: boolean;
   createdAt?: Date;
   publisher?: Publisher;
+  placeholder?: boolean;
 };
 
 /**
@@ -31,7 +32,7 @@ export class ServiceRecord {
   creditHours?: number;
   serviceHours?: number;
   comments?: string;
-
+  placeholder?: boolean;
   private constructor(input: {
     id?: string;
     bibleStudies: number;
@@ -42,6 +43,7 @@ export class ServiceRecord {
     publisher?: Publisher;
     isResolved?: boolean;
     createdAt?: Date;
+    placeholder?: boolean;
   }) {
     this.id = input.id ?? uuidv4();
     this.bibleStudies = input.bibleStudies;
@@ -52,6 +54,7 @@ export class ServiceRecord {
     this.createdAt = input.createdAt ?? new Date();
     this.serviceMonth = new Month(input.serviceMonth);
     this.publisher = input.publisher ?? undefined;
+    this.placeholder = input.placeholder ?? false;
   }
 
   static create(input: ServiceRecordProps): ServiceRecord {

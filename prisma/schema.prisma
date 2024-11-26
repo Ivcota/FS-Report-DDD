@@ -21,17 +21,17 @@ model ServiceRecord {
   serviceHours Int?
   comments     String?
   publisher    Publisher? @relation(fields: [publisherId], references: [id])
-  publisherId  String?    @unique
+  publisherId  String?
   isResolved   Boolean    @default(false)
   createdAt    DateTime   @default(now())
 }
 
 model Publisher {
-  id            String         @id @default(uuid())
-  firstName     String
-  lastName      String
-  email         String?
-  phoneNumber   String?
-  serviceRecord ServiceRecord? @relation
-  createdAt     DateTime       @default(now())
+  id             String          @id @default(uuid())
+  firstName      String
+  lastName       String
+  email          String?
+  phoneNumber    String?
+  serviceRecords ServiceRecord[]
+  createdAt      DateTime        @default(now())
 }

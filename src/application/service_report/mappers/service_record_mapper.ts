@@ -3,6 +3,7 @@ import {
   ServiceRecord as PrismaServiceRecord,
 } from "@prisma/client";
 
+import { CommitServiceRecord } from "../use_cases/commit_service_records/commit_service_records_dto";
 import { Publisher } from "@/domain/service_report/entities/publisher";
 import { ServiceRecord } from "@/domain/service_report/entities/service_record";
 import { SimplifiedServiceRecord } from "../use_cases/parse_service_records/parse-service_records_dto";
@@ -49,6 +50,24 @@ export class ServiceRecordMapper {
     });
   }
 
+  static fromCommitServiceRecord(
+    serviceRecord: CommitServiceRecord
+  ): ServiceRecord {
+    return ServiceRecord.create({
+      id: serviceRecord.id,
+      bibleStudies: serviceRecord.bibleStudies ?? 0,
+      serviceMonth: new Date(serviceRecord.serviceMonth),
+      creditHours: serviceRecord.creditHours ?? undefined,
+      serviceHours: serviceRecord.serviceHours ?? undefined,
+      comments: serviceRecord.comments ?? undefined,
+      isResolved: serviceRecord.isResolved ?? false,
+      publisher: Publisher.create({
+        firstName: serviceRecord.firstName,
+        lastName: serviceRecord.lastName,
+      }),
+    });
+  }
+
   static toEmptyDomain(
     publisher: PrismaPublisher,
     date: Date = new Date()
@@ -62,6 +81,7 @@ export class ServiceRecordMapper {
       comments: undefined,
       isResolved: false,
       createdAt: date,
+      placeholder: true,
       publisher: Publisher.create({
         id: publisher.id,
         firstName: publisher.firstName,
@@ -87,6 +107,7 @@ export class ServiceRecordMapper {
       creditHours: serviceRecord.creditHours ?? undefined,
       serviceHours: serviceRecord.serviceHours ?? undefined,
       comments: serviceRecord.comments ?? undefined,
+      placeholder: serviceRecord.placeholder,
     };
   }
 }
