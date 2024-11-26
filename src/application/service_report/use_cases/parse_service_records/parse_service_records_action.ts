@@ -14,7 +14,7 @@ const parseServiceRecordsUseCase = new ParseServiceRecordsUseCase(
 );
 
 type ActionState = {
-  serviceRecords: ServiceRecord[];
+  serviceRecords: any;
   error?: string;
 };
 
@@ -33,7 +33,7 @@ export const parseServiceRecordsAction = async (
   });
 
   return {
-    serviceRecords,
+    serviceRecords: JSON.stringify(serviceRecords),
     error,
   };
 };

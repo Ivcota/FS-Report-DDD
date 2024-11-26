@@ -37,15 +37,16 @@ export default function Home() {
         <button
           type="submit"
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          disabled={isLoading}
         >
           Parse
         </button>
       </form>
       {result.error && <p className="text-red-500">{result.error}</p>}
       {result.serviceRecords.length > 0 && (
-        <pre className="bg-gray-100 p-4 rounded">
+        <div className="bg-gray-100 p-4 rounded">
           {JSON.stringify(result.serviceRecords, null, 2)}
-        </pre>
+        </div>
       )}
     </div>
   );
