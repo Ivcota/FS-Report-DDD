@@ -47,15 +47,7 @@ export function ServiceRecordList({
                         {new Date(serviceRecord.createdAt).toLocaleDateString()}
                       </dd>
                     </div>
-                    <div>
-                      <dt className="text-sm font-medium text-gray-500">
-                        Bible Studies
-                      </dt>
-                      <dd className="mt-1 text-sm text-gray-900">
-                        {serviceRecord.bibleStudies}
-                      </dd>
-                    </div>
-                    {serviceRecord.serviceHours && (
+                    {!!serviceRecord.serviceHours && (
                       <div>
                         <dt className="text-sm font-medium text-gray-500">
                           Service Hours
@@ -65,7 +57,7 @@ export function ServiceRecordList({
                         </dd>
                       </div>
                     )}
-                    {serviceRecord.creditHours && (
+                    {!!serviceRecord.creditHours && (
                       <div>
                         <dt className="text-sm font-medium text-gray-500">
                           Credit Hours
@@ -75,7 +67,17 @@ export function ServiceRecordList({
                         </dd>
                       </div>
                     )}
-                    {serviceRecord.comments && (
+                    {!!serviceRecord.bibleStudies && (
+                      <div>
+                        <dt className="text-sm font-medium text-gray-500">
+                          Bible Studies
+                        </dt>
+                        <dd className="mt-1 text-sm text-gray-900">
+                          {serviceRecord.bibleStudies}
+                        </dd>
+                      </div>
+                    )}
+                    {!!serviceRecord.comments && (
                       <div className="sm:col-span-2">
                         <dt className="text-sm font-medium text-gray-500">
                           Comments
