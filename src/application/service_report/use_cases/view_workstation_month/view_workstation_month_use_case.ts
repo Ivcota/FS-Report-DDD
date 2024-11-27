@@ -21,7 +21,11 @@ export class ViewWorkstationMonthUseCase
   ): Promise<ViewWorkstationMonthUseCaseOutputDTO> {
     let month: Month;
     try {
-      month = new Month(new Date(input.monthStart));
+      if (!input.monthStart) {
+        month = new Month(new Date());
+      } else {
+        month = new Month(new Date(input.monthStart));
+      }
     } catch (error) {
       return {
         results: [],
