@@ -1,22 +1,35 @@
 import { Month } from "@/domain/service_report/value_objects/month";
 import { ServiceContainer } from "@/application/service_report/service_container";
+import WorkstationForm from "@/app/ui/service_report/workstation/WorkstationForm";
+import dayjs from "dayjs";
 
-const ServiceReportWorkstation = async () => {
+type ServiceReportWorkstationProps = {
+  searchParams: {
+    month: string;
+  };
+};
+
+const ServiceReportWorkstation = async ({
+  searchParams,
+}: ServiceReportWorkstationProps) => {
   const serviceContainer = ServiceContainer.getInstance();
   const serviceRecordRepository = serviceContainer.serviceRecordRepository;
 
-  const serviceRecords =
-    await serviceRecordRepository.findAllEmptyAndPopulatedRecordsForAGivenMonth(
-      new Month(new Date("2024-10-01"))
-    );
+  const monthParam = searchParams.month;
+  const date = new Date(monthParam ?? new Date().toISOString());
+  const month = new Month(date);
 
-  console.log(serviceRecords);
+  const serviceRecords =
+    await serviceRecordRepository.findAllEmptyAndPopulatedRecordsForGivenMonth(
+      month
+    );
 
   return (
     <div className="p-6 max-w-7xl mx-auto">
       <h1 className="text-3xl font-bold mb-8 text-gray-800">
         Service Report Workstation
       </h1>
+      <WorkstationForm selectedMonth={month.monthStart} />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {serviceRecords.map((serviceRecord) => (
           <div
@@ -39,9 +52,13 @@ const ServiceReportWorkstation = async () => {
               </span>
             </div>
             <p className="text-sm text-gray-500">
-              {new Date(
-                serviceRecord.serviceMonth.monthStart
-              ).toLocaleDateString("en-US", { month: "long", year: "numeric" })}
+              {dayjs(
+                Date.UTC(
+                  serviceRecord.serviceMonth.monthEnd.getUTCFullYear(),
+                  serviceRecord.serviceMonth.monthEnd.getUTCMonth(),
+                  1
+                )
+              ).format("MMM YYYY")}
             </p>
           </div>
         ))}

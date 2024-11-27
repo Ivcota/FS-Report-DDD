@@ -1,10 +1,10 @@
 "use client";
 
-import { ServiceRecordCommitForm } from "@/app/ui/service_report/components/ServiceRecordCommitForm";
-import { ServiceRecordForm } from "@/app/ui/service_report/components/ServiceRecordForm";
-import { ServiceRecordList } from "@/app/ui/service_report/components/ServiceRecordList";
-import { ServiceRecordParserError } from "@/app/ui/service_report/components/ServiceRecordParserError";
-import { ServiceRecordParserHeader } from "@/app/ui/service_report/components/ServiceRecordParserHeader";
+import { ServiceRecordCommitForm } from "@/app/ui/service_report/parser/ServiceRecordCommitForm";
+import { ServiceRecordForm } from "@/app/ui/service_report/parser/ServiceRecordForm";
+import { ServiceRecordList } from "@/app/ui/service_report/parser/ServiceRecordList";
+import { ServiceRecordParserError } from "@/app/ui/service_report/parser/ServiceRecordParserError";
+import { ServiceRecordParserHeader } from "@/app/ui/service_report/parser/ServiceRecordParserHeader";
 import { commitServiceRecordsAction } from "@/application/service_report/use_cases/commit_service_records/commit_service_records_action";
 import { parseServiceRecordsAction } from "@/application/service_report/use_cases/parse_service_records/parse_service_records_action";
 import { useActionState } from "react";

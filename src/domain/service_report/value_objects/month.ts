@@ -4,10 +4,18 @@ export class Month {
 
   constructor(dateWithinMonth: Date) {
     this.monthStart = new Date(
-      Date.UTC(dateWithinMonth.getFullYear(), dateWithinMonth.getMonth(), 1)
+      Date.UTC(
+        dateWithinMonth.getUTCFullYear(),
+        dateWithinMonth.getUTCMonth(),
+        1
+      )
     );
     this.monthEnd = new Date(
-      Date.UTC(dateWithinMonth.getFullYear(), dateWithinMonth.getMonth() + 1, 0)
+      Date.UTC(
+        dateWithinMonth.getUTCFullYear(),
+        dateWithinMonth.getUTCMonth() + 1,
+        1
+      )
     );
   }
 }

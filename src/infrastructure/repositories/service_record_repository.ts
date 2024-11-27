@@ -1,4 +1,4 @@
-import { IServiceRecordRepository } from "@/domain/service_report/ports/service_record_repository";
+import { IServiceRecordRepository } from "@/domain/service_report/infra_ports/service_record_repository";
 import { Month } from "@/domain/service_report/value_objects/month";
 import { PrismaClient } from "@prisma/client";
 import { PublisherMapper } from "@/application/service_report/mappers/publisher_mapper";
@@ -77,7 +77,7 @@ export class ServiceRecordRepository implements IServiceRecordRepository {
     );
   }
 
-  async findAllEmptyAndPopulatedRecordsForAGivenMonth(
+  async findAllEmptyAndPopulatedRecordsForGivenMonth(
     month: Month
   ): Promise<ServiceRecord[]> {
     const serviceRecords = await this.prisma.serviceRecord.findMany({
@@ -97,13 +97,12 @@ export class ServiceRecordRepository implements IServiceRecordRepository {
         )
     );
 
-    populatedRecords.map((serviceRecord) =>
-      ServiceRecordMapper.toDomain(serviceRecord)
-    );
-
-    const populatedDomainRecords = populatedRecords.map((serviceRecord) =>
-      ServiceRecordMapper.toDomain(serviceRecord)
-    );
+    const populatedDomainRecords = populatedRecords.map((serviceRecord) => {
+      const publisher = publishers.find(
+        (publisher) => publisher.id === serviceRecord.publisherId
+      );
+      return ServiceRecordMapper.toDomain(serviceRecord, publisher);
+    });
 
     const emptyDomainRecords =
       publishers_without_service_record_for_this_month.map((publisher) =>
