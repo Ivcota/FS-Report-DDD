@@ -1,10 +1,10 @@
 import { AIService } from "@/infrastructure/external_services/ai";
+import { IServiceRecordRepository } from "@/domain/service_report/infra_ports/service_record_repository";
 import { PrismaClient } from "@prisma/client";
 import { ServiceRecordRepository } from "@/infrastructure/repositories/service_record_repository";
-
 export class ServiceContainer {
   private static instance: ServiceContainer;
-  serviceRecordRepository: ServiceRecordRepository;
+  serviceRecordRepository: IServiceRecordRepository;
   aiService: AIService;
 
   private constructor() {

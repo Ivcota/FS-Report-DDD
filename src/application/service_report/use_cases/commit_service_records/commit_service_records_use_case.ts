@@ -3,8 +3,8 @@ import {
   CommitServiceRecordsUseCaseOutput,
 } from "./commit_service_records_dto";
 
+import { IServiceRecordRepository } from "@/domain/service_report/infra_ports/service_record_repository";
 import { ServiceRecordMapper } from "../../mappers/service_record_mapper";
-import { ServiceRecordRepository } from "@/infrastructure/repositories/service_record_repository";
 import { UseCase } from "@/shared/use_case";
 
 export class CommitServiceRecordsUseCase
@@ -14,7 +14,7 @@ export class CommitServiceRecordsUseCase
       CommitServiceRecordsUseCaseOutput
     >
 {
-  constructor(private serviceRecordRepository: ServiceRecordRepository) {}
+  constructor(private serviceRecordRepository: IServiceRecordRepository) {}
   async execute(
     input: CommitServiceRecordsUseCaseInputDTO
   ): Promise<CommitServiceRecordsUseCaseOutput> {
