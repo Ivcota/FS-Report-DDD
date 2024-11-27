@@ -3,11 +3,8 @@ import { ViewWorkstationMonthUseCase } from "@/application/service_report/use_ca
 import WorkstationForm from "@/app/ui/service_report/workstation/WorkstationForm";
 import dayjs from "dayjs";
 
-type ServiceReportWorkstationProps = {
-  searchParams: {
-    month?: string;
-  };
-};
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type ServiceReportWorkstationProps = any;
 
 const serviceContainer = ServiceContainer.getInstance();
 const serviceRecordRepository = serviceContainer.serviceRecordRepository;
