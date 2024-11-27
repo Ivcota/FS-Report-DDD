@@ -31,9 +31,9 @@ const WorkstationForm = ({ selectedMonth }: { selectedMonth: Date }) => {
         type="month"
         name="month"
         defaultValue={
-          searchParams.get("month") !== null
-            ? new Date(selectedMonth?.setDate(1)).toISOString()
-            : new Date().toISOString()
+          searchParams.get("month") !== null && selectedMonth
+            ? new Date(selectedMonth.setDate(1)).toISOString().slice(0, 7)
+            : new Date().toISOString().slice(0, 7)
         }
         className="flex-1 rounded-lg border-0 px-4 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
       />
