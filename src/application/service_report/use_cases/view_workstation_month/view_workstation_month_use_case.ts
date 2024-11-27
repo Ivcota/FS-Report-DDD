@@ -7,7 +7,7 @@ import { IServiceRecordRepository } from "@/domain/service_report/infra_ports/se
 import { Month } from "@/domain/service_report/value_objects/month";
 import { UseCase } from "@/shared/use_case";
 
-class ViewWorkstationMonthUseCase
+export class ViewWorkstationMonthUseCase
   implements
     UseCase<
       ViewWorkstationMonthUseCaseInputDTO,
@@ -23,11 +23,24 @@ class ViewWorkstationMonthUseCase
     try {
       month = new Month(new Date(input.monthStart));
     } catch (error) {
-      return { success: false, error: "Invalid month" };
+      return {
+        results: [],
+        error: `Invalid month: ${JSON.stringify(error)}`,
+      };
     }
 
-    return this.serviceRecordRepository.findAllEmptyAndPopulatedRecordsForGivenMonth(
-      month
-    );
+    try {
+      const results =
+        await this.serviceRecordRepository.findAllEmptyAndPopulatedRecordsForGivenMonth(
+          month
+        );
+
+      return { results };
+    } catch (error) {
+      return {
+        results: [],
+        error: `Error fetching service records: ${JSON.stringify(error)}`,
+      };
+    }
   }
 }

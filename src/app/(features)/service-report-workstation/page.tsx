@@ -1,5 +1,6 @@
 import { Month } from "@/domain/service_report/value_objects/month";
 import { ServiceContainer } from "@/application/service_report/service_container";
+import { ViewWorkstationMonthUseCase } from "@/application/service_report/use_cases/view_workstation_month/view_workstation_month_use_case";
 import WorkstationForm from "@/app/ui/service_report/workstation/WorkstationForm";
 import dayjs from "dayjs";
 
@@ -9,29 +10,33 @@ type ServiceReportWorkstationProps = {
   };
 };
 
+const serviceContainer = ServiceContainer.getInstance();
+const serviceRecordRepository = serviceContainer.serviceRecordRepository;
+const viewWorkstationMonthUseCase = new ViewWorkstationMonthUseCase(
+  serviceRecordRepository
+);
+
 const ServiceReportWorkstation = async ({
   searchParams,
 }: ServiceReportWorkstationProps) => {
-  const serviceContainer = ServiceContainer.getInstance();
-  const serviceRecordRepository = serviceContainer.serviceRecordRepository;
-
   const monthParam = searchParams.month;
-  const date = new Date(monthParam ?? new Date().toISOString());
-  const month = new Month(date);
 
-  const serviceRecords =
-    await serviceRecordRepository.findAllEmptyAndPopulatedRecordsForGivenMonth(
-      month
-    );
+  const { results, error } = await viewWorkstationMonthUseCase.execute({
+    monthStart: monthParam,
+  });
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
     <div className="p-6 max-w-7xl mx-auto">
       <h1 className="text-3xl font-bold mb-8 text-gray-800">
         Service Report Workstation
       </h1>
-      <WorkstationForm selectedMonth={month.monthStart} />
+      <WorkstationForm selectedMonth={new Date(monthParam)} />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {serviceRecords.map((serviceRecord) => (
+        {results.map((serviceRecord) => (
           <div
             key={serviceRecord.publisher?.id ?? serviceRecord.id}
             className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow"
