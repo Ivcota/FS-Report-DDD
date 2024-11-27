@@ -56,15 +56,52 @@ const ServiceReportWorkstation = async ({
                 {!serviceRecord.placeholder ? "Submitted ✅" : "Pending ❌"}
               </span>
             </div>
-            <p className="text-sm text-gray-500">
-              {dayjs(
-                Date.UTC(
-                  serviceRecord.serviceMonth.monthEnd.getUTCFullYear(),
-                  serviceRecord.serviceMonth.monthEnd.getUTCMonth(),
-                  1
-                )
-              ).format("MMM YYYY")}
-            </p>
+
+            <div className="space-y-2">
+              <p className="text-sm text-gray-500">
+                <span className="font-medium">Month:</span>{" "}
+                {dayjs(
+                  Date.UTC(
+                    serviceRecord.serviceMonth.monthEnd.getUTCFullYear(),
+                    serviceRecord.serviceMonth.monthEnd.getUTCMonth(),
+                    1
+                  )
+                ).format("MMMM YYYY")}
+              </p>
+
+              <div className="grid grid-cols-2 gap-2 text-sm">
+                <p className="text-gray-600">
+                  <span className="font-medium">Service Hours:</span>{" "}
+                  {serviceRecord.serviceHours ?? "Not reported"}
+                </p>
+                <p className="text-gray-600">
+                  <span className="font-medium">Credit Hours:</span>{" "}
+                  {serviceRecord.creditHours ?? "Not reported"}
+                </p>
+                <p className="text-gray-600">
+                  <span className="font-medium">Bible Studies:</span>{" "}
+                  {serviceRecord.bibleStudies}
+                </p>
+                <p className="text-gray-600">
+                  <span className="font-medium">Status:</span>{" "}
+                  {serviceRecord.isResolved ? "Resolved" : "Unresolved"}
+                </p>
+              </div>
+
+              {serviceRecord.comments && (
+                <div className="mt-2">
+                  <p className="text-sm text-gray-600">
+                    <span className="font-medium">Comments:</span>
+                    <br />
+                    <span className="italic">{serviceRecord.comments}</span>
+                  </p>
+                </div>
+              )}
+
+              <p className="text-xs text-gray-400 mt-2">
+                Created: {dayjs(serviceRecord.createdAt).format("MMM D, YYYY")}
+              </p>
+            </div>
           </div>
         ))}
       </div>
