@@ -1,7 +1,7 @@
 import { IUserRepository } from "@/domain/user/infra_ports/user_repository";
 import { PrismaClient } from "@prisma/client";
 import { User } from "@/domain/user/entities/User";
-import { UserMapper } from "@/domain/user/mappers/user_mapper";
+import { UserMapper } from "@/application/user/mappers/user_mapper";
 
 export class UserRepository implements IUserRepository {
   constructor(private readonly prisma: PrismaClient) {}

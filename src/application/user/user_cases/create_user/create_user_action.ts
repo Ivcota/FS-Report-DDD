@@ -3,6 +3,7 @@
 import { CreateUserUseCase } from "./create_user_use_case";
 import { CreateUserUseCaseInputDTO } from "./create_user_dtos";
 import { ServiceContainer } from "@/application/service_report/service_container";
+import { signIn } from "@/infrastructure/external_services/auth";
 
 type ActionState = {
   success: boolean;
@@ -30,6 +31,13 @@ export const createUserAction = async (
   };
 
   const { success, error } = await createUserUseCase.execute(input);
+
+  if (success) {
+    await signIn("credentials", {
+      email: input.email,
+      password: input.password,
+    });
+  }
 
   return { success, error };
 };

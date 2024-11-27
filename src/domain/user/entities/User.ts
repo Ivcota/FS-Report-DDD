@@ -1,6 +1,5 @@
-import { hash, verify } from "@node-rs/bcrypt";
-
 import { Role } from "../value_objects/Role";
+import bcrypt from "bcryptjs";
 import { v4 as uuidv4 } from "uuid";
 
 export class User {
@@ -39,7 +38,7 @@ export class User {
       );
     }
     const saltRounds = 10;
-    const hashedPassword = await hash(password, saltRounds);
+    const hashedPassword = bcrypt.hashSync(password, saltRounds);
 
     return new User(
       uuidv4(),
@@ -53,13 +52,12 @@ export class User {
   }
 
   async verifyPassword(password: string): Promise<boolean> {
-    return verify(password, this.password);
+    return bcrypt.compareSync(password, this.password);
   }
 
   async updatePassword(password: string): Promise<void> {
     const saltRounds = 10;
-    const hashedPassword = await hash(password, saltRounds);
-    this.password = hashedPassword;
+    this.password = bcrypt.hashSync(password, saltRounds);
   }
 
   updateEmail(email: string): void {

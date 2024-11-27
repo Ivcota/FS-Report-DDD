@@ -1,6 +1,7 @@
+import { ClientUser } from "@/application/user/user_cases/authorize_user/authorize_user_dtos";
 import { User as PrismaUser } from "@prisma/client";
-import { Role } from "../value_objects/Role";
-import { User } from "../entities/User";
+import { Role } from "../../../domain/user/value_objects/Role";
+import { User } from "../../../domain/user/entities/User";
 
 export class UserMapper {
   static toPersistence(user: User): PrismaUser {
@@ -25,5 +26,14 @@ export class UserMapper {
       new Role(user.role),
       user.createdAt
     );
+  }
+  static toClient(user: User): ClientUser {
+    return {
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      role: user.role.name,
+    };
   }
 }

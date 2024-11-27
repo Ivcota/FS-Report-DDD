@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { auth } from "@/infrastructure/external_services/auth";
 
-export default function Home() {
+export default async function Home() {
+  const _session = await auth();
   return (
     <div className="bg-white">
       {/* Header */}
