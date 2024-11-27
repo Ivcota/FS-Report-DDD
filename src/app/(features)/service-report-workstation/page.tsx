@@ -1,4 +1,3 @@
-import { Month } from "@/domain/service_report/value_objects/month";
 import { ServiceContainer } from "@/application/service_report/service_container";
 import { ViewWorkstationMonthUseCase } from "@/application/service_report/use_cases/view_workstation_month/view_workstation_month_use_case";
 import WorkstationForm from "@/app/ui/service_report/workstation/WorkstationForm";
@@ -6,7 +5,7 @@ import dayjs from "dayjs";
 
 type ServiceReportWorkstationProps = {
   searchParams: {
-    month: string;
+    month?: string;
   };
 };
 
@@ -19,7 +18,7 @@ const viewWorkstationMonthUseCase = new ViewWorkstationMonthUseCase(
 const ServiceReportWorkstation = async ({
   searchParams,
 }: ServiceReportWorkstationProps) => {
-  const monthParam = searchParams.month;
+  const monthParam = searchParams.month ?? dayjs().format("YYYY-MM-DD");
 
   const { results, error } = await viewWorkstationMonthUseCase.execute({
     monthStart: monthParam,
