@@ -1,4 +1,4 @@
-import { signIn } from "@/modual/user/infrastructure/external_services/auth";
+import { signIn } from "@/module/user/infrastructure/external_services/auth";
 
 const SignInPage = () => {
   return (

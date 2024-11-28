@@ -5,8 +5,8 @@ import { ServiceRecordForm } from "@/app/ui/service_report/parser/ServiceRecordF
 import { ServiceRecordList } from "@/app/ui/service_report/parser/ServiceRecordList";
 import { ServiceRecordParserError } from "@/app/ui/service_report/parser/ServiceRecordParserError";
 import { ServiceRecordParserHeader } from "@/app/ui/service_report/parser/ServiceRecordParserHeader";
-import { commitServiceRecordsAction } from "@/modual/service_report/application/use_cases/commit_service_records/commit_service_records_action";
-import { parseServiceRecordsAction } from "@/modual/service_report/application/use_cases/parse_service_records/parse_service_records_action";
+import { commitServiceRecordsAction } from "@/module/service_report/application/use_cases/commit_service_records/commit_service_records_action";
+import { parseServiceRecordsAction } from "@/module/service_report/application/use_cases/parse_service_records/parse_service_records_action";
 import { useActionState } from "react";
 
 export default function ServiceReportParser() {

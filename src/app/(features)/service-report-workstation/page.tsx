@@ -1,5 +1,5 @@
 import { ServiceContainer } from "@/service_container";
-import { ViewWorkstationMonthUseCase } from "@/modual/service_report/application/use_cases/view_workstation_month/view_workstation_month_use_case";
+import { ViewWorkstationMonthUseCase } from "@/module/service_report/application/use_cases/view_workstation_month/view_workstation_month_use_case";
 import WorkstationForm from "@/app/ui/service_report/workstation/WorkstationForm";
 import dayjs from "dayjs";
 

@@ -1,1 +1,1 @@
-export { auth as middleware } from "@/modual/user/infrastructure/external_services/auth";
+export { auth as middleware } from "@/module/user/infrastructure/external_services/auth";

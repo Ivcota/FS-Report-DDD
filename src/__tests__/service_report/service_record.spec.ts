@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import { Publisher } from "@/modual/service_report/domain/entities/publisher";
-import { ServiceRecord } from "@/modual/service_report/domain/entities/service_record";
+import { Publisher } from "@/module/service_report/domain/entities/publisher";
+import { ServiceRecord } from "@/module/service_report/domain/entities/service_record";
 
 describe("ServiceRecord", () => {
   it("should create a service record", () => {

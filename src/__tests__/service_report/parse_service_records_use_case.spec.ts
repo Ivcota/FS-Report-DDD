@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { ParseServiceRecordsUseCase } from "@/modual/service_report/application/use_cases/parse_service_records/parse_service_records_use_case";
+import { ParseServiceRecordsUseCase } from "@/module/service_report/application/use_cases/parse_service_records/parse_service_records_use_case";
 import { ServiceContainer } from "@/service_container";
 
 describe("ParseServiceRecordsUseCase", () => {

@@ -1,9 +1,9 @@
-import { AIService } from "./modual/shared/infrastructure/external_services/ai";
-import { IServiceRecordRepository } from "@/modual/service_report/domain/infra_ports/service_record_repository";
-import { IUserRepository } from "@/modual/user/domain/infra_ports/user_repository";
+import { AIService } from "./module/shared/infrastructure/external_services/ai";
+import { IServiceRecordRepository } from "@/module/service_report/domain/infra_ports/service_record_repository";
+import { IUserRepository } from "@/module/user/domain/infra_ports/user_repository";
 import { PrismaClient } from "@prisma/client";
-import { ServiceRecordRepository } from "./modual/service_report/infrastructure/repositories/service_record_repository";
-import { UserRepository } from "./modual/user/infrastructure/repositories/user_repository";
+import { ServiceRecordRepository } from "./module/service_report/infrastructure/repositories/service_record_repository";
+import { UserRepository } from "./module/user/infrastructure/repositories/user_repository";
 export class ServiceContainer {
   private static instance: ServiceContainer;
   serviceRecordRepository: IServiceRecordRepository;

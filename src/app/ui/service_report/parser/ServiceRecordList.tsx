@@ -1,4 +1,4 @@
-import { SimplifiedServiceRecord } from "@/modual/service_report/application/use_cases/parse_service_records/parse-service_records_dto";
+import { SimplifiedServiceRecord } from "@/module/service_report/application/use_cases/parse_service_records/parse-service_records_dto";
 
 export function ServiceRecordList({
   serviceRecords,
