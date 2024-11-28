@@ -13,10 +13,10 @@ export class User {
     public createdAt: Date
   ) {
     this.id = id;
-    this.email = email;
+    this.email = email.toLowerCase().trim();
     this.password = password;
-    this.firstName = firstName;
-    this.lastName = lastName;
+    this.firstName = firstName.trim();
+    this.lastName = lastName.trim();
     this.role = role;
     this.createdAt = createdAt;
   }
@@ -38,7 +38,10 @@ export class User {
       );
     }
     const saltRounds = 10;
-    const hashedPassword = bcrypt.hashSync(password, saltRounds);
+    const hashedPassword = bcrypt.hashSync(
+      password.toString().trim(),
+      saltRounds
+    );
 
     return new User(
       uuidv4(),

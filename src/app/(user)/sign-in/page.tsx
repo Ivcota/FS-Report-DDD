@@ -1,10 +1,18 @@
+import {
+  auth,
+  signIn,
+} from "@/module/user/infrastructure/external_services/auth";
+
 import { redirect } from "next/navigation";
-import { signIn } from "@/module/user/infrastructure/external_services/auth";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type SignInPageProps = any;
 
 const SignInPage = async ({ searchParams }: SignInPageProps) => {
+  const user = await auth();
+  if (user) {
+    redirect("/service-report-parser");
+  }
   const error = (await searchParams).error;
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -20,12 +28,16 @@ const SignInPage = async ({ searchParams }: SignInPageProps) => {
           action={async (formData) => {
             "use server";
             try {
-              await signIn("credentials", formData, {
-                redirectTo: "/service-report-parser",
-              });
-            } catch (_error) {
-              console.error(_error);
-              redirect("/sign-in?error=true");
+              await signIn("credentials", formData);
+            } catch (error) {
+              if (
+                !(
+                  error instanceof Error &&
+                  error.message.includes("NEXT_REDIRECT")
+                )
+              ) {
+                redirect("/sign-in?error=true");
+              }
             }
           }}
         >

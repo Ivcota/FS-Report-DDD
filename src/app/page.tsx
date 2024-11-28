@@ -40,7 +40,7 @@ export default async function Home() {
             </button>
           </div>
           <div className="hidden lg:flex lg:gap-x-12">
-            {user?.user?.id ? (
+            {user ? (
               <>
                 <Link
                   href="/service-report-parser"
@@ -79,7 +79,7 @@ export default async function Home() {
             </a>
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            {user?.user?.id ? (
+            {user ? (
               <Link
                 href="/service-report-parser"
                 className="text-sm font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
@@ -88,7 +88,7 @@ export default async function Home() {
               </Link>
             ) : (
               <Link
-                href="/login"
+                href="/sign-in"
                 className="text-sm font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
               >
                 Login <span aria-hidden="true">→</span>
@@ -195,7 +195,7 @@ export default async function Home() {
                 </p>
                 <p className="mt-6">
                   <Link
-                    href={user ? "/service-report-parser" : "/login"}
+                    href={user ? "/service-report-parser" : "/sign-in"}
                     className="text-sm font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
                   >
                     Learn more <span aria-hidden="true">→</span>
@@ -216,7 +216,7 @@ export default async function Home() {
                 </p>
                 <p className="mt-6">
                   <Link
-                    href={user ? "/service-report-workstation" : "/login"}
+                    href={user ? "/service-report-workstation" : "/sign-in"}
                     className="text-sm font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
                   >
                     Learn more <span aria-hidden="true">→</span>
@@ -292,7 +292,7 @@ export default async function Home() {
                       <>
                         <li>
                           <Link
-                            href="/login"
+                            href="/sign-in"
                             className="text-sm leading-6 text-gray-300 hover:text-white"
                           >
                             Login
