@@ -1,9 +1,11 @@
 import Link from "next/link";
+import { auth } from "@/module/user/infrastructure/external_services/auth";
 
 export default async function Home() {
+  const user = await auth();
+
   return (
     <div className="bg-white">
-      {/* Header */}
       <header className="absolute inset-x-0 top-0 z-50">
         <nav
           className="flex items-center justify-between p-6 lg:px-8"
@@ -38,18 +40,37 @@ export default async function Home() {
             </button>
           </div>
           <div className="hidden lg:flex lg:gap-x-12">
-            <Link
-              href="/service-report-parser"
-              className="text-sm font-semibold leading-6 text-gray-900 hover:text-indigo-600"
-            >
-              Parser
-            </Link>
-            <Link
-              href="/service-report-workstation"
-              className="text-sm font-semibold leading-6 text-gray-900 hover:text-indigo-600"
-            >
-              Workstation
-            </Link>
+            {user?.user?.id ? (
+              <>
+                <Link
+                  href="/service-report-parser"
+                  className="text-sm font-semibold leading-6 text-gray-900 hover:text-indigo-600"
+                >
+                  Parser
+                </Link>
+                <Link
+                  href="/service-report-workstation"
+                  className="text-sm font-semibold leading-6 text-gray-900 hover:text-indigo-600"
+                >
+                  Workstation
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/sign-in"
+                  className="text-sm font-semibold leading-6 text-gray-900 hover:text-indigo-600"
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/sign-up"
+                  className="text-sm font-semibold leading-6 text-gray-900 hover:text-indigo-600"
+                >
+                  Sign up
+                </Link>
+              </>
+            )}
             <a
               href="#features"
               className="text-sm font-semibold leading-6 text-gray-900 hover:text-indigo-600"
@@ -58,12 +79,21 @@ export default async function Home() {
             </a>
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <Link
-              href="/service-report-parser"
-              className="text-sm font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-            >
-              Get started <span aria-hidden="true">→</span>
-            </Link>
+            {user?.user?.id ? (
+              <Link
+                href="/service-report-parser"
+                className="text-sm font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+              >
+                Get started <span aria-hidden="true">→</span>
+              </Link>
+            ) : (
+              <Link
+                href="/login"
+                className="text-sm font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+              >
+                Login <span aria-hidden="true">→</span>
+              </Link>
+            )}
           </div>
         </nav>
       </header>
@@ -90,24 +120,37 @@ export default async function Home() {
               toolset for parsing and managing workstation reports.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
-              <Link
-                href="/service-report-parser"
-                className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Parser Report
-              </Link>
-              <Link
-                href="/service-report-workstation"
-                className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-              >
-                Workstation Report
-              </Link>
-              <Link
-                href="/sign-up"
-                className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-              >
-                Sign up
-              </Link>
+              {user ? (
+                <>
+                  <Link
+                    href="/service-report-parser"
+                    className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  >
+                    Parser Report
+                  </Link>
+                  <Link
+                    href="/service-report-workstation"
+                    className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                  >
+                    Workstation Report
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/sign-in"
+                    className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    href="/sign-up"
+                    className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                  >
+                    Sign up
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -152,7 +195,7 @@ export default async function Home() {
                 </p>
                 <p className="mt-6">
                   <Link
-                    href="/service-report-parser"
+                    href={user ? "/service-report-parser" : "/login"}
                     className="text-sm font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
                   >
                     Learn more <span aria-hidden="true">→</span>
@@ -173,7 +216,7 @@ export default async function Home() {
                 </p>
                 <p className="mt-6">
                   <Link
-                    href="/service-report-workstation"
+                    href={user ? "/service-report-workstation" : "/login"}
                     className="text-sm font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
                   >
                     Learn more <span aria-hidden="true">→</span>
@@ -226,22 +269,45 @@ export default async function Home() {
                     Features
                   </h3>
                   <ul role="list" className="mt-6 space-y-4">
-                    <li>
-                      <Link
-                        href="/service-report-parser"
-                        className="text-sm leading-6 text-gray-300 hover:text-white"
-                      >
-                        Parser
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="/service-report-workstation"
-                        className="text-sm leading-6 text-gray-300 hover:text-white"
-                      >
-                        Workstation
-                      </Link>
-                    </li>
+                    {user ? (
+                      <>
+                        <li>
+                          <Link
+                            href="/service-report-parser"
+                            className="text-sm leading-6 text-gray-300 hover:text-white"
+                          >
+                            Parser
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            href="/service-report-workstation"
+                            className="text-sm leading-6 text-gray-300 hover:text-white"
+                          >
+                            Workstation
+                          </Link>
+                        </li>
+                      </>
+                    ) : (
+                      <>
+                        <li>
+                          <Link
+                            href="/login"
+                            className="text-sm leading-6 text-gray-300 hover:text-white"
+                          >
+                            Login
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            href="/sign-up"
+                            className="text-sm leading-6 text-gray-300 hover:text-white"
+                          >
+                            Sign up
+                          </Link>
+                        </li>
+                      </>
+                    )}
                   </ul>
                 </div>
                 <div className="mt-10 md:mt-0">

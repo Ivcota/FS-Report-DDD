@@ -1,6 +1,11 @@
+import { redirect } from "next/navigation";
 import { signIn } from "@/module/user/infrastructure/external_services/auth";
 
-const SignInPage = () => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type SignInPageProps = any;
+
+const SignInPage = async ({ searchParams }: SignInPageProps) => {
+  const error = (await searchParams).error;
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -14,9 +19,14 @@ const SignInPage = () => {
           className="space-y-6"
           action={async (formData) => {
             "use server";
-            await signIn("credentials", formData, {
-              redirectTo: "/animals",
-            });
+            try {
+              await signIn("credentials", formData, {
+                redirectTo: "/service-report-parser",
+              });
+            } catch (_error) {
+              console.error(_error);
+              redirect("/sign-in?error=true");
+            }
           }}
         >
           <div>
@@ -47,15 +57,8 @@ const SignInPage = () => {
               >
                 Password
               </label>
-              <div className="text-sm">
-                <a
-                  href="#"
-                  className="font-semibold text-indigo-600 hover:text-indigo-500"
-                >
-                  Forgot password?
-                </a>
-              </div>
             </div>
+
             <div className="mt-2">
               <input
                 id="password"
@@ -67,6 +70,10 @@ const SignInPage = () => {
               />
             </div>
           </div>
+
+          {error && (
+            <p className="text-red-500 text-sm">Invalid email or password</p>
+          )}
 
           <div>
             <button
