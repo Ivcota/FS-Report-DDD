@@ -4,7 +4,7 @@ import {
 } from "./authorize_user_dtos";
 
 import { IUserRepository } from "@/modual/user/domain/infra_ports/user_repository";
-import { UseCase } from "@/shared/use_case";
+import { UseCase } from "@/modual/shared/application/use_case";
 import { UserMapper } from "../../mappers/user_mapper";
 
 export class AuthorizeUserUseCase

@@ -7,7 +7,7 @@ import { AIService } from "@/modual/shared/infrastructure/external_services/ai";
 import { PreviewRecordListSchema } from "@/modual/service_report/domain/value_objects/preview_record";
 import { PreviewRecordMapper } from "@/modual/service_report/domain/mapper/preview_record_mapper";
 import { ServiceRecordMapper } from "@/modual/service_report/application/mappers/service_record_mapper";
-import { UseCase } from "@/shared/use_case";
+import { UseCase } from "@/modual/shared/application/use_case";
 
 export class ParseServiceRecordsUseCase
   implements

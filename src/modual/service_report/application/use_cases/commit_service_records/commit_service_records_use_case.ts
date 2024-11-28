@@ -5,7 +5,7 @@ import {
 
 import { IServiceRecordRepository } from "@/modual/service_report/domain/infra_ports/service_record_repository";
 import { ServiceRecordMapper } from "../../mappers/service_record_mapper";
-import { UseCase } from "@/shared/use_case";
+import { UseCase } from "@/modual/shared/application/use_case";
 
 export class CommitServiceRecordsUseCase
   implements
