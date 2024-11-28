@@ -8,6 +8,7 @@ import { IUserRepository } from "@/module/user/domain/infra_ports/user_repositor
 import { PrismaClient } from "@prisma/client";
 import { ServiceRecordRepository } from "@/module/service_report/infrastructure/repositories/service_record_repository";
 import { UserRepository } from "@/module/user/infrastructure/repositories/user_repository";
+import { registerUserEvents } from "./module/user/infrastructure/events/register_user_events";
 
 export class ServiceContainer {
   private static instance: ServiceContainer;
@@ -24,6 +25,7 @@ export class ServiceContainer {
     this.fieldServiceGroupRepository = new FieldServiceGroupRepository(prisma);
     this.aiService = new AIService(process.env.OPENAI_API_KEY);
     this.eventBus = new EventBus();
+    this.registerEvents(this.eventBus);
   }
 
   static getInstance(): ServiceContainer {
@@ -31,5 +33,8 @@ export class ServiceContainer {
       ServiceContainer.instance = new ServiceContainer();
     }
     return ServiceContainer.instance;
+  }
+  registerEvents(eventBus: IEventBus) {
+    registerUserEvents(eventBus);
   }
 }

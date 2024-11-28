@@ -11,7 +11,8 @@ type ActionState = {
 };
 const serviceContainer = ServiceContainer.getInstance();
 const createUserUseCase = new CreateUserUseCase(
-  serviceContainer.userRepository
+  serviceContainer.userRepository,
+  serviceContainer.eventBus
 );
 
 export const createUserAction = async (
