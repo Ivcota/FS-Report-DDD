@@ -45,3 +45,10 @@ model User {
   role      String
   createdAt DateTime @default(now())
 }
+
+model FieldServiceGroup {
+  id          String   @id @default(uuid())
+  name        String
+  userOwnerId String
+  createdAt   DateTime @default(now())
+}

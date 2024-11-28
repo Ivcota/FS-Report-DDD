@@ -1,4 +1,6 @@
+import { DomainEvent } from "@/module/shared/domain/events/domain_event";
 import { Role } from "../value_objects/Role";
+import { UserCreatedEvent } from "../events/user_created_event";
 import bcrypt from "bcryptjs";
 import { v4 as uuidv4 } from "uuid";
 
@@ -10,7 +12,8 @@ export class User {
     public firstName: string,
     public lastName: string,
     public role: Role = new Role("user"),
-    public createdAt: Date
+    public createdAt: Date,
+    private domainEvents: DomainEvent[] = []
   ) {
     this.id = id;
     this.email = email.toLowerCase().trim();
@@ -19,6 +22,7 @@ export class User {
     this.lastName = lastName.trim();
     this.role = role;
     this.createdAt = createdAt;
+    this.domainEvents = domainEvents;
   }
 
   static async create(
@@ -43,7 +47,7 @@ export class User {
       saltRounds
     );
 
-    return new User(
+    const user = new User(
       uuidv4(),
       email,
       hashedPassword,
@@ -52,6 +56,8 @@ export class User {
       role,
       new Date()
     );
+    user.domainEvents.push(new UserCreatedEvent(user));
+    return user;
   }
 
   async verifyPassword(password: string): Promise<boolean> {
@@ -69,5 +75,13 @@ export class User {
 
   updateRole(role: Role): void {
     this.role = role;
+  }
+
+  getDomainEvents(): DomainEvent[] {
+    return this.domainEvents;
+  }
+
+  clearDomainEvents(): void {
+    this.domainEvents = [];
   }
 }
