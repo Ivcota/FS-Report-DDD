@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { Month } from "@/domain/service_report/value_objects/month";
+import { Month } from "@/modual/service_report/domain/value_objects/month";
 
 describe("Month", () => {
   it("should create a month object with a range based on a date within the month", () => {

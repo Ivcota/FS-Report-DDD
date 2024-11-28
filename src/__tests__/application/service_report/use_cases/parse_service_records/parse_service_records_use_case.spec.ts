@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import { ParseServiceRecordsUseCase } from "@/application/service_report/use_cases/parse_service_records/parse_service_records_use_case";
-import { ServiceContainer } from "@/application/service_report/service_container";
+import { ParseServiceRecordsUseCase } from "@/modual/service_report/application/use_cases/parse_service_records/parse_service_records_use_case";
+import { ServiceContainer } from "@/service_container";
 
 describe("ParseServiceRecordsUseCase", () => {
   const serviceContainer = ServiceContainer.getInstance();

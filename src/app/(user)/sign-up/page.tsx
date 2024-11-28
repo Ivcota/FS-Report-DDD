@@ -1,6 +1,6 @@
 "use client";
 
-import { createUserAction } from "@/application/user/user_cases/create_user/create_user_action";
+import { createUserAction } from "@/modual/user/application/user_cases/create_user/create_user_action";
 import { useActionState } from "react";
 
 const SignUpPage = () => {
