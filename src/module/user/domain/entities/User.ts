@@ -1,10 +1,10 @@
-import { DomainEvent } from "@/module/shared/domain/events/domain_event";
+import { AggregateRoot } from "@/module/shared/domain/aggregate_root";
 import { Role } from "../value_objects/Role";
 import { UserCreatedEvent } from "../events/user_created_event";
 import bcrypt from "bcryptjs";
 import { v4 as uuidv4 } from "uuid";
 
-export class User {
+export class User extends AggregateRoot {
   constructor(
     public id: string,
     public email: string,
@@ -12,17 +12,15 @@ export class User {
     public firstName: string,
     public lastName: string,
     public role: Role = new Role("user"),
-    public createdAt: Date,
-    private domainEvents: DomainEvent[] = []
+    public createdAt: Date
   ) {
-    this.id = id;
+    super(id);
     this.email = email.toLowerCase().trim();
     this.password = password;
     this.firstName = firstName.trim();
     this.lastName = lastName.trim();
     this.role = role;
     this.createdAt = createdAt;
-    this.domainEvents = domainEvents;
   }
 
   static async create(
@@ -56,7 +54,7 @@ export class User {
       role,
       new Date()
     );
-    user.domainEvents.push(new UserCreatedEvent(user));
+    user.addDomainEvent(new UserCreatedEvent(user));
     return user;
   }
 
@@ -75,13 +73,5 @@ export class User {
 
   updateRole(role: Role): void {
     this.role = role;
-  }
-
-  getDomainEvents(): DomainEvent[] {
-    return this.domainEvents;
-  }
-
-  clearDomainEvents(): void {
-    this.domainEvents = [];
   }
 }

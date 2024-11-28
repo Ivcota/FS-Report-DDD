@@ -16,11 +16,11 @@ export class FieldServiceGroupMapper {
   static toDomain(
     fieldServiceGroup: FieldServiceGroupPrisma
   ): FieldServiceGroup {
-    return new FieldServiceGroup(
-      fieldServiceGroup.id,
-      fieldServiceGroup.name,
-      fieldServiceGroup.userOwnerId,
-      fieldServiceGroup.createdAt
-    );
+    return new FieldServiceGroup({
+      id: fieldServiceGroup.id,
+      name: fieldServiceGroup.name,
+      userOwnerId: fieldServiceGroup.userOwnerId,
+      createdAt: fieldServiceGroup.createdAt,
+    });
   }
 }

@@ -1,3 +1,4 @@
+import { AggregateRoot } from "@/module/shared/domain/aggregate_root";
 import { Month } from "../value_objects/month";
 import { Publisher } from "./publisher";
 import { v4 as uuidv4 } from "uuid";
@@ -22,8 +23,7 @@ type ServiceRecordProps = {
  * Acts as the aggregate root for the service report bounded context,
  * maintaining consistency and enforcing business rules around service reporting.
  */
-export class ServiceRecord {
-  id: string;
+export class ServiceRecord extends AggregateRoot {
   serviceMonth: Month;
   createdAt: Date;
   bibleStudies: number;
@@ -45,7 +45,7 @@ export class ServiceRecord {
     createdAt?: Date;
     placeholder?: boolean;
   }) {
-    this.id = input.id ?? uuidv4();
+    super(input.id ?? uuidv4());
     this.bibleStudies = input.bibleStudies;
     this.creditHours = input.creditHours;
     this.serviceHours = input.serviceHours;

@@ -1,3 +1,4 @@
+import { Entity } from "@/module/shared/domain/entity";
 import { FieldServiceGroup } from "./field_service_group";
 import { v4 as uuidv4 } from "uuid";
 
@@ -11,8 +12,7 @@ type PublisherProps = {
   createdAt?: Date;
 };
 
-export class Publisher {
-  id: string;
+export class Publisher extends Entity {
   firstName: string;
   lastName: string;
   email?: string;
@@ -21,7 +21,7 @@ export class Publisher {
   createdAt: Date;
 
   private constructor(input: PublisherProps) {
-    this.id = input.id ?? uuidv4();
+    super(input.id ?? uuidv4());
     this.firstName = input.firstName;
     this.lastName = input.lastName;
     this.email = input.email;
