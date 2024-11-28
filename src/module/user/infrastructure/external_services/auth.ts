@@ -1,5 +1,5 @@
-import { AuthorizeUserInputDTO } from "@/module/user/application/user_cases/authorize_user/authorize_user_dtos";
-import { AuthorizeUserUseCase } from "@/module/user/application/user_cases/authorize_user/authorize_user_use_case";
+import { AuthorizeUserInputDTO } from "@/module/user/application/use_cases/authorize_user/authorize_user_dtos";
+import { AuthorizeUserUseCase } from "@/module/user/application/use_cases/authorize_user/authorize_user_use_case";
 import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth from "next-auth";
 import { ServiceContainer } from "@/service_container";

@@ -1,4 +1,4 @@
-import { ClientUser } from "@/module/user/application/user_cases/authorize_user/authorize_user_dtos";
+import { ClientUser } from "@/module/user/application/use_cases/authorize_user/authorize_user_dtos";
 import { User as PrismaUser } from "@prisma/client";
 import { Role } from "../../domain/value_objects/Role";
 import { User } from "../../domain/entities/User";
