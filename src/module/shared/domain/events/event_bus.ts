@@ -1,5 +1,5 @@
-import { DomainEvent } from "./domain_event";
-import { EventHandler } from "./event_handler";
+import { DomainEvent } from "@/module/shared/domain/events/domain_event";
+import { EventHandler } from "@/module/shared/domain/events/event_handler";
 
 export interface IEventBus {
   publish(event: DomainEvent): Promise<void>;
