@@ -15,7 +15,7 @@ const viewWorkstationMonthUseCase = new ViewWorkstationMonthUseCase(
 const ServiceReportWorkstation = async ({
   searchParams,
 }: ServiceReportWorkstationProps) => {
-  const monthParam = searchParams.month ?? dayjs().format("YYYY-MM-DD");
+  const monthParam = (await searchParams).month ?? dayjs().format("YYYY-MM-DD");
 
   const { results, error } = await viewWorkstationMonthUseCase.execute({
     monthStart: monthParam,

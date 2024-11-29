@@ -130,4 +130,9 @@ export class ServiceRecordRepository implements IServiceRecordRepository {
       ServiceRecordMapper.toDomain(serviceRecord, serviceRecord.publisher)
     );
   }
+  async delete(id: string): Promise<void> {
+    await this.prisma.serviceRecord.delete({
+      where: { id },
+    });
+  }
 }

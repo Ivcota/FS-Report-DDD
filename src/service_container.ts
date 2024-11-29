@@ -13,6 +13,7 @@ import { IServiceRecordRepository } from "@/module/service_report/domain/infra_p
 import { IUserRepository } from "@/module/user/domain/infra_ports/user_repository";
 import { PrismaClient } from "@prisma/client";
 import { ServiceRecordRepository } from "@/module/service_report/infrastructure/repositories/service_record_repository";
+import { ServiceRecordService } from "@/module/service_report/domain/service/service_record_service";
 import { UserRepository } from "@/module/user/infrastructure/repositories/user_repository";
 import { registerUserEvents } from "./module/user/infrastructure/events/register_user_events";
 import { registerUserEvents as registerUserEventsServiceReport } from "@/module/service_report/infrastructure/events/register_user_events";
@@ -24,6 +25,7 @@ type ServiceContainerDependencies = {
   createFieldServiceGroupUseCase: CreateFieldServiceGroupUseCase;
   aiService: AIService;
   eventBus: IEventBus;
+  serviceRecordService: ServiceRecordService;
 };
 
 type ServiceContainerPublicUseCases = {
@@ -60,6 +62,9 @@ export class ServiceContainer
   /** Event bus for handling domain events */
   eventBus: IEventBus;
 
+  /** Service for managing service records */
+  serviceRecordService: ServiceRecordService;
+
   /**
    * Private constructor to prevent direct instantiation.
    * Initializes all dependencies including repositories, services, and event handlers.
@@ -76,6 +81,7 @@ export class ServiceContainer
     // Initialize external services
     this.aiService = new AIService(process.env.OPENAI_API_KEY);
     this.eventBus = new EventBus();
+    this.serviceRecordService = new ServiceRecordService();
 
     // Initialize use cases with their required dependencies
     this.createFieldServiceGroupUseCase = new CreateFieldServiceGroupUseCase(

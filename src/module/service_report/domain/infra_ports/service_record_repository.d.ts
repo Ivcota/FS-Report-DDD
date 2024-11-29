@@ -9,4 +9,5 @@ export interface IServiceRecordRepository {
   findAllEmptyAndPopulatedRecordsForGivenMonth(
     month: Month
   ): Promise<ServiceRecord[]>;
+  delete(id: string): Promise<void>;
 }
