@@ -21,6 +21,7 @@ export class ServiceRecordMapper {
       isResolved: serviceRecord.isResolved,
       createdAt: serviceRecord.createdAt,
       publisherId: serviceRecord.publisher?.id ?? null,
+      fieldServiceGroupId: serviceRecord.fieldServiceGroupId ?? null,
     };
   }
 
@@ -37,6 +38,7 @@ export class ServiceRecordMapper {
       comments: serviceRecord.comments ?? undefined,
       isResolved: serviceRecord.isResolved,
       createdAt: serviceRecord.createdAt,
+      fieldServiceGroupId: serviceRecord.fieldServiceGroupId ?? undefined,
       publisher: publisher
         ? Publisher.create({
             id: publisher.id,

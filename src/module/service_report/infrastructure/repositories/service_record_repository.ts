@@ -11,15 +11,12 @@ export class ServiceRecordRepository implements IServiceRecordRepository {
   async findById(id: string): Promise<ServiceRecord | undefined> {
     const serviceRecord = await this.prisma.serviceRecord.findUnique({
       where: { id },
+      include: { publisher: true },
     });
 
     if (!serviceRecord) throw new Error("Service record not found");
 
-    const publisher = await this.prisma.publisher.findUnique({
-      where: { id: serviceRecord.publisherId ?? undefined },
-    });
-
-    return ServiceRecordMapper.toDomain(serviceRecord, publisher);
+    return ServiceRecordMapper.toDomain(serviceRecord, serviceRecord.publisher);
   }
 
   async save(serviceRecord: ServiceRecord): Promise<void> {
@@ -70,10 +67,11 @@ export class ServiceRecordRepository implements IServiceRecordRepository {
   async findByMonth(month: Month): Promise<ServiceRecord[]> {
     const serviceRecords = await this.prisma.serviceRecord.findMany({
       where: { serviceMonth: month.monthStart },
+      include: { publisher: true },
     });
 
     return serviceRecords.map((serviceRecord) =>
-      ServiceRecordMapper.toDomain(serviceRecord)
+      ServiceRecordMapper.toDomain(serviceRecord, serviceRecord.publisher)
     );
   }
 
@@ -115,18 +113,21 @@ export class ServiceRecordRepository implements IServiceRecordRepository {
   async findByPublisherId(publisherId: string): Promise<ServiceRecord[]> {
     const serviceRecords = await this.prisma.serviceRecord.findMany({
       where: { publisherId },
+      include: { publisher: true },
     });
 
     return serviceRecords.map((serviceRecord) =>
-      ServiceRecordMapper.toDomain(serviceRecord)
+      ServiceRecordMapper.toDomain(serviceRecord, serviceRecord.publisher)
     );
   }
 
   async findAll(): Promise<ServiceRecord[]> {
-    const serviceRecords = await this.prisma.serviceRecord.findMany();
+    const serviceRecords = await this.prisma.serviceRecord.findMany({
+      include: { publisher: true },
+    });
 
     return serviceRecords.map((serviceRecord) =>
-      ServiceRecordMapper.toDomain(serviceRecord)
+      ServiceRecordMapper.toDomain(serviceRecord, serviceRecord.publisher)
     );
   }
 }

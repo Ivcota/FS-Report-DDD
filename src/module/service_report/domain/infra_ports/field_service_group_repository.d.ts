@@ -4,5 +4,7 @@ export interface IFieldServiceGroupRepository {
   save(fieldServiceGroup: FieldServiceGroup): Promise<FieldServiceGroup>;
   delete(fieldServiceGroup: FieldServiceGroup): Promise<void>;
   findById(id: string): Promise<FieldServiceGroup | undefined>;
-  findByUserOwnerId(userOwnerId: string): Promise<FieldServiceGroup[]>;
+  findByUserOwnerId(
+    userOwnerId: string
+  ): Promise<FieldServiceGroup | undefined>;
 }

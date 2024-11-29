@@ -32,10 +32,14 @@ export class FieldServiceGroupRepository
       : undefined;
   }
 
-  async findByUserOwnerId(userOwnerId: string): Promise<FieldServiceGroup[]> {
-    const fieldServiceGroups = await this.prisma.fieldServiceGroup.findMany({
+  async findByUserOwnerId(
+    userOwnerId: string
+  ): Promise<FieldServiceGroup | undefined> {
+    const fieldServiceGroup = await this.prisma.fieldServiceGroup.findFirst({
       where: { userOwnerId },
     });
-    return fieldServiceGroups.map(FieldServiceGroupMapper.toDomain);
+    return fieldServiceGroup
+      ? FieldServiceGroupMapper.toDomain(fieldServiceGroup)
+      : undefined;
   }
 }

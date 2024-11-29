@@ -10,7 +10,8 @@ import { ServiceContainer } from "@/service_container";
 
 const serviceContainer = ServiceContainer.getInstance();
 const commitServiceRecordsUseCase = new CommitServiceRecordsUseCase(
-  serviceContainer.serviceRecordRepository
+  serviceContainer.serviceRecordRepository,
+  serviceContainer.fieldServiceGroupRepository
 );
 
 type ActionState = {
@@ -23,6 +24,11 @@ export const commitServiceRecordsAction = async (
   formData: FormData
 ): Promise<ActionState> => {
   const serviceRecords = formData.get("serviceRecords");
+  const userId = formData.get("userId");
+
+  if (!userId) {
+    return { success: false, error: "No user ID provided" };
+  }
 
   if (!serviceRecords) {
     return { success: false, error: "No service records provided" };
@@ -40,6 +46,7 @@ export const commitServiceRecordsAction = async (
 
   const result = await commitServiceRecordsUseCase.execute({
     serviceRecords: serviceRecordsParsed,
+    userId: userId?.toString(),
   });
 
   return { success: result.success, error: result.error };

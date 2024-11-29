@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export type CommitServiceRecordsUseCaseInputDTO = {
+  userId: string;
   serviceRecords: CommitServiceRecord[];
 };
 

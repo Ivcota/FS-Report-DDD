@@ -14,6 +14,7 @@ type ServiceRecordProps = {
   createdAt?: Date;
   publisher?: Publisher;
   placeholder?: boolean;
+  fieldServiceGroupId?: string;
 };
 
 /**
@@ -33,6 +34,7 @@ export class ServiceRecord extends AggregateRoot {
   serviceHours?: number;
   comments?: string;
   placeholder?: boolean;
+  fieldServiceGroupId?: string;
   private constructor(input: {
     id?: string;
     bibleStudies: number;
@@ -44,6 +46,7 @@ export class ServiceRecord extends AggregateRoot {
     isResolved?: boolean;
     createdAt?: Date;
     placeholder?: boolean;
+    fieldServiceGroupId?: string;
   }) {
     super(input.id ?? uuidv4());
     this.bibleStudies = input.bibleStudies;
@@ -55,6 +58,7 @@ export class ServiceRecord extends AggregateRoot {
     this.serviceMonth = new Month(input.serviceMonth);
     this.publisher = input.publisher ?? undefined;
     this.placeholder = input.placeholder ?? false;
+    this.fieldServiceGroupId = input.fieldServiceGroupId ?? undefined;
   }
 
   static create(input: ServiceRecordProps): ServiceRecord {
@@ -79,6 +83,10 @@ export class ServiceRecord extends AggregateRoot {
 
   assignPublisher(publisher: Publisher): void {
     this.publisher = publisher;
+  }
+
+  assignFieldServiceGroup(fieldServiceGroupId: string): void {
+    this.fieldServiceGroupId = fieldServiceGroupId;
   }
 
   resolve(): void {

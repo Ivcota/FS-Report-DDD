@@ -1,4 +1,4 @@
-import { Entity } from "@/module/shared/domain/entity";
+import { AggregateRoot } from "@/module/shared/domain/aggregate_root";
 import { v4 as uuidv4 } from "uuid";
 
 type FieldServiceGroupProps = {
@@ -8,7 +8,7 @@ type FieldServiceGroupProps = {
   createdAt?: Date;
 };
 
-export class FieldServiceGroup extends Entity {
+export class FieldServiceGroup extends AggregateRoot {
   name: string;
   userOwnerId: string;
   createdAt: Date;
