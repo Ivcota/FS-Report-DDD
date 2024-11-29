@@ -2,6 +2,7 @@
 
 import { DeleteServiceRecordUseCase } from "./delete_service_record_use_case";
 import { ServiceContainer } from "@/service_container";
+import { revalidatePath } from "next/cache";
 
 const serviceContainer = ServiceContainer.getInstance();
 const deleteServiceRecordUseCase = new DeleteServiceRecordUseCase(
@@ -15,10 +16,10 @@ type ActionState = {
   error?: string;
 };
 
-export const deleteServiceRecordAction = async (
+export async function deleteServiceRecordAction(
   _prevState: ActionState,
   formData: FormData
-): Promise<ActionState> => {
+): Promise<ActionState> {
   const id = formData.get("id")?.toString();
   const userId = formData.get("userId")?.toString();
 
@@ -30,8 +31,12 @@ export const deleteServiceRecordAction = async (
     return { success: false, error: "No user ID provided" };
   }
 
-  return await deleteServiceRecordUseCase.execute({
+  const result = await deleteServiceRecordUseCase.execute({
     id,
     userId,
   });
-};
+
+  revalidatePath("/service-report-workstation");
+
+  return { success: result.success, error: result.error };
+}
