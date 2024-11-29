@@ -7,6 +7,7 @@ type ServiceRecordCommitFormProps = {
   isCommitting: boolean;
   serviceRecords: unknown[];
   success: boolean;
+  userId: string;
 };
 
 export function ServiceRecordCommitForm({
@@ -14,6 +15,7 @@ export function ServiceRecordCommitForm({
   isCommitting,
   serviceRecords,
   success,
+  userId,
 }: ServiceRecordCommitFormProps) {
   const [localSuccess, setLocalSuccess] = useState(false);
 
@@ -37,6 +39,7 @@ export function ServiceRecordCommitForm({
         name="serviceRecords"
         value={JSON.stringify(serviceRecords)}
       />
+      <input type="hidden" name="userId" value={userId} />
       <button
         type="submit"
         disabled={isCommitting || serviceRecords.length === 0}

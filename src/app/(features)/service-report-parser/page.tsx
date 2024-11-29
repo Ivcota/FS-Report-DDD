@@ -1,59 +1,14 @@
-"use client";
+import { ServiceReportContainer } from "@/app/ui/service_report/parser/ServiceReportContainer";
+import { auth } from "@/module/user/infrastructure/external_services/auth";
 
-import { ServiceRecordCommitForm } from "@/app/ui/service_report/parser/ServiceRecordCommitForm";
-import { ServiceRecordForm } from "@/app/ui/service_report/parser/ServiceRecordForm";
-import { ServiceRecordList } from "@/app/ui/service_report/parser/ServiceRecordList";
-import { ServiceRecordParserError } from "@/app/ui/service_report/parser/ServiceRecordParserError";
-import { ServiceRecordParserHeader } from "@/app/ui/service_report/parser/ServiceRecordParserHeader";
-import { commitServiceRecordsAction } from "@/module/service_report/application/use_cases/commit_service_records/commit_service_records_action";
-import { parseServiceRecordsAction } from "@/module/service_report/application/use_cases/parse_service_records/parse_service_records_action";
-import { useActionState } from "react";
+export default async function ServiceReportParser() {
+  const user = await auth();
 
-export default function ServiceReportParser() {
-  const [result, parseServiceRecord, isLoading] = useActionState(
-    parseServiceRecordsAction,
-    {
-      error: "",
-      serviceRecords: [],
-    }
-  );
+  const userId = user?.user?.id;
 
-  const [commitServiceRecordsResult, commitServiceRecords, isCommitting] =
-    useActionState(commitServiceRecordsAction, {
-      success: false,
-      error: "",
-    });
+  if (!userId) {
+    return <div>Unauthorized</div>;
+  }
 
-  return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="mx-auto max-w-3xl px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl">
-          <ServiceRecordParserHeader />
-          <ServiceRecordForm
-            action={parseServiceRecord}
-            isLoading={isLoading}
-          />
-
-          {!!result.error && <ServiceRecordParserError error={result.error} />}
-
-          <ServiceRecordCommitForm
-            commitServiceRecords={commitServiceRecords}
-            isCommitting={isCommitting}
-            serviceRecords={result.serviceRecords}
-            success={commitServiceRecordsResult.success}
-          />
-
-          {!!commitServiceRecordsResult.error && (
-            <ServiceRecordParserError
-              error={commitServiceRecordsResult.error}
-            />
-          )}
-
-          {result.serviceRecords.length > 0 && (
-            <ServiceRecordList serviceRecords={result.serviceRecords} />
-          )}
-        </div>
-      </div>
-    </div>
-  );
+  return <ServiceReportContainer user={{ id: userId }} />;
 }
