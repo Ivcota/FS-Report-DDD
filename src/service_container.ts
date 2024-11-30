@@ -6,31 +6,12 @@
 import { EventBus, IEventBus } from "./module/shared/domain/events/event_bus";
 
 import { AIService } from "./module/shared/infrastructure/external_services/ai";
-import { CreateFieldServiceGroupUseCase } from "./module/service_report/application/use_cases/create_field_service_group/create_field_service_group_use_case";
-import { FieldServiceGroupRepository } from "@/module/service_report/infrastructure/repositories/field_service_group_repository";
-import { IFieldServiceGroupRepository } from "@/module/service_report/domain/infra_ports/field_service_group_repository";
-import { IServiceRecordRepository } from "@/module/service_report/domain/infra_ports/service_record_repository";
 import { IUserRepository } from "@/module/user/domain/infra_ports/user_repository";
 import { PrismaClient } from "@prisma/client";
-import { ServiceRecordRepository } from "@/module/service_report/infrastructure/repositories/service_record_repository";
-import { ServiceRecordService } from "@/module/service_report/domain/service/service_record_service";
+import { ServiceReportModule } from "./module/service_report/service_report.module";
 import { UserRepository } from "@/module/user/infrastructure/repositories/user_repository";
 import { registerUserEvents } from "./module/user/infrastructure/events/register_user_events";
 import { registerUserEvents as registerUserEventsServiceReport } from "@/module/service_report/infrastructure/events/register_user_events";
-
-type ServiceContainerDependencies = {
-  serviceRecordRepository: IServiceRecordRepository;
-  userRepository: IUserRepository;
-  fieldServiceGroupRepository: IFieldServiceGroupRepository;
-  createFieldServiceGroupUseCase: CreateFieldServiceGroupUseCase;
-  aiService: AIService;
-  eventBus: IEventBus;
-  serviceRecordService: ServiceRecordService;
-};
-
-type ServiceContainerPublicUseCases = {
-  createFieldServiceGroupUseCase: CreateFieldServiceGroupUseCase;
-};
 
 /**
  * ServiceContainer class implements the Singleton pattern to provide a single source of truth
@@ -38,32 +19,20 @@ type ServiceContainerPublicUseCases = {
  *
  * @class ServiceContainer
  */
-export class ServiceContainer
-  implements ServiceContainerDependencies, ServiceContainerPublicUseCases
-{
+export class ServiceContainer {
   /** Singleton instance of the ServiceContainer */
   private static instance: ServiceContainer;
 
-  /** Repository for managing service records */
-  serviceRecordRepository: IServiceRecordRepository;
+  serviceReportModule: ServiceReportModule;
 
   /** Repository for managing users */
   userRepository: IUserRepository;
-
-  /** Repository for managing field service groups */
-  fieldServiceGroupRepository: IFieldServiceGroupRepository;
-
-  /** Use case for creating field service groups */
-  createFieldServiceGroupUseCase: CreateFieldServiceGroupUseCase;
 
   /** Service for AI-related operations */
   aiService: AIService;
 
   /** Event bus for handling domain events */
   eventBus: IEventBus;
-
-  /** Service for managing service records */
-  serviceRecordService: ServiceRecordService;
 
   /**
    * Private constructor to prevent direct instantiation.
@@ -74,19 +43,13 @@ export class ServiceContainer
   private constructor() {
     // Initialize database connection and repositories
     const prisma = new PrismaClient();
-    this.serviceRecordRepository = new ServiceRecordRepository(prisma);
     this.userRepository = new UserRepository(prisma);
-    this.fieldServiceGroupRepository = new FieldServiceGroupRepository(prisma);
 
     // Initialize external services
     this.aiService = new AIService(process.env.OPENAI_API_KEY);
     this.eventBus = new EventBus();
-    this.serviceRecordService = new ServiceRecordService();
 
-    // Initialize use cases with their required dependencies
-    this.createFieldServiceGroupUseCase = new CreateFieldServiceGroupUseCase(
-      this.fieldServiceGroupRepository
-    );
+    this.serviceReportModule = new ServiceReportModule(prisma, this.aiService);
 
     // Register event handlers for domain events
     // Must be called after all dependencies are initialized since handlers may depend on repositories/services
@@ -117,7 +80,7 @@ export class ServiceContainer
     registerUserEvents(eventBus);
     registerUserEventsServiceReport(
       eventBus,
-      this.createFieldServiceGroupUseCase
+      this.serviceReportModule.getCreateFieldServiceGroupUseCase()
     );
   }
 }

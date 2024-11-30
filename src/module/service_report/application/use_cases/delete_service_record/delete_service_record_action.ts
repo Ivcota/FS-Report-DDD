@@ -1,15 +1,9 @@
 "use server";
 
-import { DeleteServiceRecordUseCase } from "./delete_service_record_use_case";
 import { ServiceContainer } from "@/service_container";
 import { revalidatePath } from "next/cache";
 
 const serviceContainer = ServiceContainer.getInstance();
-const deleteServiceRecordUseCase = new DeleteServiceRecordUseCase(
-  serviceContainer.serviceRecordRepository,
-  serviceContainer.fieldServiceGroupRepository,
-  serviceContainer.serviceRecordService
-);
 
 type ActionState = {
   success: boolean;
@@ -30,6 +24,9 @@ export async function deleteServiceRecordAction(
   if (!userId) {
     return { success: false, error: "No user ID provided" };
   }
+
+  const deleteServiceRecordUseCase =
+    serviceContainer.serviceReportModule.getDeleteServiceRecordUseCase();
 
   const result = await deleteServiceRecordUseCase.execute({
     id,

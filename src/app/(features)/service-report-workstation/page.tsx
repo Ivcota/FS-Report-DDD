@@ -1,6 +1,5 @@
 import { ServiceContainer } from "@/service_container";
 import { ServiceRecordMapper } from "@/module/service_report/application/mappers/service_record_mapper";
-import { ViewWorkstationMonthUseCase } from "@/module/service_report/application/use_cases/view_workstation_month/view_workstation_month_use_case";
 import { WorkstationCard } from "@/app/ui/service_report/workstation/WorkstationCard";
 import WorkstationForm from "@/app/ui/service_report/workstation/WorkstationForm";
 import { auth } from "@/module/user/infrastructure/external_services/auth";
@@ -10,10 +9,8 @@ import dayjs from "dayjs";
 type ServiceReportWorkstationProps = any;
 
 const serviceContainer = ServiceContainer.getInstance();
-const serviceRecordRepository = serviceContainer.serviceRecordRepository;
-const viewWorkstationMonthUseCase = new ViewWorkstationMonthUseCase(
-  serviceRecordRepository
-);
+const viewWorkstationMonthUseCase =
+  serviceContainer.serviceReportModule.getViewWorkstationMonthUseCase();
 
 const ServiceReportWorkstation = async ({
   searchParams,

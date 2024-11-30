@@ -5,14 +5,9 @@ import {
   CommitServiceRecordsSchema,
 } from "./commit_service_records_dto";
 
-import { CommitServiceRecordsUseCase } from "./commit_service_records_use_case";
 import { ServiceContainer } from "@/service_container";
 
 const serviceContainer = ServiceContainer.getInstance();
-const commitServiceRecordsUseCase = new CommitServiceRecordsUseCase(
-  serviceContainer.serviceRecordRepository,
-  serviceContainer.fieldServiceGroupRepository
-);
 
 type ActionState = {
   success: boolean;
@@ -23,6 +18,9 @@ export const commitServiceRecordsAction = async (
   _prevState: ActionState,
   formData: FormData
 ): Promise<ActionState> => {
+  const commitServiceRecordsUseCase =
+    serviceContainer.serviceReportModule.getCommitServiceRecordsUseCase();
+
   const serviceRecords = formData.get("serviceRecords");
   const userId = formData.get("userId");
 
