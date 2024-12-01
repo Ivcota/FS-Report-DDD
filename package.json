@@ -10,10 +10,12 @@
     "test": "vitest",
     "test:watch": "vitest watch",
     "coverage": "vitest run --coverage",
-    "startup": "chmod +x startup.sh && ./startup.sh"
+    "startup": "chmod +x startup.sh && ./startup.sh",
+    "db:migrate": "bunx prisma migrate dev"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
+    "@types/bcryptjs": "^2.4.6",
     "bcryptjs": "^2.4.3",
     "dayjs": "^1.11.13",
     "next": "15.0.3",
