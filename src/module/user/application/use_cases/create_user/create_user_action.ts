@@ -1,6 +1,6 @@
 "use server";
 
-import { CompositionRoot } from "@/service_container";
+import { CompositionRoot } from "@/composition-root";
 import { CreateUserUseCase } from "./create_user_use_case";
 import { CreateUserUseCaseInputDTO } from "./create_user_dtos";
 import { signIn } from "@/module/user/infrastructure/external_services/auth";

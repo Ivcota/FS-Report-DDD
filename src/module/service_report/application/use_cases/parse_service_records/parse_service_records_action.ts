@@ -1,6 +1,6 @@
 "use server";
 
-import { CompositionRoot } from "@/service_container";
+import { CompositionRoot } from "@/composition-root";
 import { SimplifiedServiceRecord } from "./parse-service_records_dto";
 
 const serviceContainer = CompositionRoot.getInstance();

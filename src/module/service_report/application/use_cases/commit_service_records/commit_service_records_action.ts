@@ -5,7 +5,7 @@ import {
   CommitServiceRecordsSchema,
 } from "./commit_service_records_dto";
 
-import { CompositionRoot } from "@/service_container";
+import { CompositionRoot } from "@/composition-root";
 
 const serviceContainer = CompositionRoot.getInstance();
 

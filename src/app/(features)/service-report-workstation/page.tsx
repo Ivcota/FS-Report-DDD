@@ -1,4 +1,4 @@
-import { CompositionRoot } from "@/service_container";
+import { CompositionRoot } from "@/composition-root";
 import { ServiceRecordMapper } from "@/module/service_report/application/mappers/service_record_mapper";
 import { WorkstationCard } from "@/app/ui/service_report/workstation/WorkstationCard";
 import WorkstationForm from "@/app/ui/service_report/workstation/WorkstationForm";

@@ -1,6 +1,6 @@
 "use server";
 
-import { CompositionRoot } from "@/service_container";
+import { CompositionRoot } from "@/composition-root";
 import { revalidatePath } from "next/cache";
 
 const serviceContainer = CompositionRoot.getInstance();
