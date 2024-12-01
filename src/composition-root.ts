@@ -1,5 +1,5 @@
 /**
- * @fileoverview Service Container implementation using the Singleton pattern to manage application-wide dependencies.
+ * @fileoverview Composition Root implementation using the Singleton pattern to manage application-wide dependencies.
  * This container handles the initialization and management of repositories, services, and event handlers.
  */
 
