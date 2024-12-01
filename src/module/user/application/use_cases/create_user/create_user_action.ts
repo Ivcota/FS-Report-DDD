@@ -1,15 +1,15 @@
 "use server";
 
+import { CompositionRoot } from "@/service_container";
 import { CreateUserUseCase } from "./create_user_use_case";
 import { CreateUserUseCaseInputDTO } from "./create_user_dtos";
-import { ServiceContainer } from "@/service_container";
 import { signIn } from "@/module/user/infrastructure/external_services/auth";
 
 type ActionState = {
   success: boolean;
   error?: string;
 };
-const serviceContainer = ServiceContainer.getInstance();
+const serviceContainer = CompositionRoot.getInstance();
 const createUserUseCase = serviceContainer.userModule.getCreateUserUseCase();
 
 export const createUserAction = async (

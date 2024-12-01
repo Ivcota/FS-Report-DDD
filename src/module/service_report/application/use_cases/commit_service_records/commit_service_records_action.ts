@@ -5,9 +5,9 @@ import {
   CommitServiceRecordsSchema,
 } from "./commit_service_records_dto";
 
-import { ServiceContainer } from "@/service_container";
+import { CompositionRoot } from "@/service_container";
 
-const serviceContainer = ServiceContainer.getInstance();
+const serviceContainer = CompositionRoot.getInstance();
 
 type ActionState = {
   success: boolean;

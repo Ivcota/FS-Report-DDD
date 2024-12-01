@@ -13,14 +13,14 @@ import { registerUserEvents } from "./module/user/infrastructure/events/register
 import { registerUserEvents as registerUserEventsServiceReport } from "@/module/service_report/infrastructure/events/register_user_events";
 
 /**
- * ServiceContainer class implements the Singleton pattern to provide a single source of truth
+ * CompositionRoot class implements the Singleton pattern to provide a single source of truth
  * for all service dependencies throughout the application.
  *
- * @class ServiceContainer
+ * @class CompositionRoot
  */
-export class ServiceContainer {
-  /** Singleton instance of the ServiceContainer */
-  private static instance: ServiceContainer;
+export class CompositionRoot {
+  /** Singleton instance of the CompositionRoot */
+  private static instance: CompositionRoot;
 
   /** Service for AI-related operations */
   private aiService: AIService;
@@ -56,17 +56,17 @@ export class ServiceContainer {
   }
 
   /**
-   * Gets the singleton instance of the ServiceContainer.
+   * Gets the singleton instance of the CompositionRoot.
    * Creates a new instance if one doesn't exist.
    *
-   * @returns {ServiceContainer} The singleton instance of ServiceContainer
+   * @returns {CompositionRoot} The singleton instance of CompositionRoot
    * @static
    */
-  static getInstance(): ServiceContainer {
-    if (!ServiceContainer.instance) {
-      ServiceContainer.instance = new ServiceContainer();
+  static getInstance(): CompositionRoot {
+    if (!CompositionRoot.instance) {
+      CompositionRoot.instance = new CompositionRoot();
     }
-    return ServiceContainer.instance;
+    return CompositionRoot.instance;
   }
 
   /**

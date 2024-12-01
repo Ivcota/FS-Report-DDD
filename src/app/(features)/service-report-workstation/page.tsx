@@ -1,4 +1,4 @@
-import { ServiceContainer } from "@/service_container";
+import { CompositionRoot } from "@/service_container";
 import { ServiceRecordMapper } from "@/module/service_report/application/mappers/service_record_mapper";
 import { WorkstationCard } from "@/app/ui/service_report/workstation/WorkstationCard";
 import WorkstationForm from "@/app/ui/service_report/workstation/WorkstationForm";
@@ -8,7 +8,7 @@ import dayjs from "dayjs";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ServiceReportWorkstationProps = any;
 
-const serviceContainer = ServiceContainer.getInstance();
+const serviceContainer = CompositionRoot.getInstance();
 const viewWorkstationMonthUseCase =
   serviceContainer.serviceReportModule.getViewWorkstationMonthUseCase();
 

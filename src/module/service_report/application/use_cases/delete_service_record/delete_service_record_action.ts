@@ -1,9 +1,9 @@
 "use server";
 
-import { ServiceContainer } from "@/service_container";
+import { CompositionRoot } from "@/service_container";
 import { revalidatePath } from "next/cache";
 
-const serviceContainer = ServiceContainer.getInstance();
+const serviceContainer = CompositionRoot.getInstance();
 
 type ActionState = {
   success: boolean;

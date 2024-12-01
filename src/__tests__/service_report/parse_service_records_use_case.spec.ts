@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
 
+import { CompositionRoot } from "@/service_container";
 import { ParseServiceRecordsUseCase } from "@/module/service_report/application/use_cases/parse_service_records/parse_service_records_use_case";
-import { ServiceContainer } from "@/service_container";
 
 describe("ParseServiceRecordsUseCase", () => {
-  const serviceContainer = ServiceContainer.getInstance();
+  const serviceContainer = CompositionRoot.getInstance();
   const aiService = serviceContainer.aiService;
   const parseServiceRecordsUseCase = new ParseServiceRecordsUseCase(aiService);
 
