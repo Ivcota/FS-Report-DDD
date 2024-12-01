@@ -9,6 +9,7 @@ import { AIService } from "./module/shared/infrastructure/external_services/ai";
 import { Config } from "./config";
 import { PrismaClient } from "@prisma/client";
 import { ServiceReportModule } from "./module/service_report/service_report.module";
+import { SharedModule } from "./module/shared/shared.module";
 import { UserModule } from "./module/user/user.module";
 import { registerUserEvents } from "./module/user/infrastructure/events/register_user_events";
 import { registerUserEvents as registerUserEventsServiceReport } from "@/module/service_report/infrastructure/events/register_user_events";
@@ -23,11 +24,8 @@ export class CompositionRoot {
   /** Singleton instance of the CompositionRoot */
   private static instance: CompositionRoot;
 
-  /** Service for AI-related operations */
-  private aiService: AIService;
-
-  /** Event bus for handling domain events */
-  private eventBus: IEventBus;
+  /** Shared module for shared dependencies */
+  private sharedModule: SharedModule;
 
   /** Module for service report operations */
   serviceReportModule: ServiceReportModule;
@@ -43,17 +41,19 @@ export class CompositionRoot {
    */
   private constructor(config: Config) {
     // Initialize database connection and repositories
-    const prisma = new PrismaClient();
-    // Initialize external services
-    this.aiService = new AIService(config.OPENAI_API_KEY);
-    this.eventBus = new EventBus();
-
-    this.serviceReportModule = new ServiceReportModule(prisma, this.aiService);
-    this.userModule = new UserModule(prisma, this.eventBus);
+    this.sharedModule = new SharedModule(config);
+    this.serviceReportModule = new ServiceReportModule(
+      this.sharedModule.getPrismaClient(),
+      this.sharedModule.getAIService()
+    );
+    this.userModule = new UserModule(
+      this.sharedModule.getPrismaClient(),
+      this.sharedModule.getEventBus()
+    );
 
     // Register event handlers for domain events
     // Must be called after all dependencies are initialized since handlers may depend on repositories/services
-    this.registerEvents(this.eventBus);
+    this.registerEvents(this.sharedModule.getEventBus());
   }
 
   /**
