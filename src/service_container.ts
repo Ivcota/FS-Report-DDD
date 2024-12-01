@@ -6,11 +6,9 @@
 import { EventBus, IEventBus } from "./module/shared/domain/events/event_bus";
 
 import { AIService } from "./module/shared/infrastructure/external_services/ai";
-import { IUserRepository } from "@/module/user/domain/infra_ports/user_repository";
 import { PrismaClient } from "@prisma/client";
 import { ServiceReportModule } from "./module/service_report/service_report.module";
 import { UserModule } from "./module/user/user.module";
-import { UserRepository } from "@/module/user/infrastructure/repositories/user_repository";
 import { registerUserEvents } from "./module/user/infrastructure/events/register_user_events";
 import { registerUserEvents as registerUserEventsServiceReport } from "@/module/service_report/infrastructure/events/register_user_events";
 
@@ -24,16 +22,17 @@ export class ServiceContainer {
   /** Singleton instance of the ServiceContainer */
   private static instance: ServiceContainer;
 
-  serviceReportModule: ServiceReportModule;
-  userModule: UserModule;
-  /** Repository for managing users */
-  userRepository: IUserRepository;
-
   /** Service for AI-related operations */
   aiService: AIService;
 
   /** Event bus for handling domain events */
   eventBus: IEventBus;
+
+  /** Module for service report operations */
+  serviceReportModule: ServiceReportModule;
+
+  /** Module for user operations */
+  userModule: UserModule;
 
   /**
    * Private constructor to prevent direct instantiation.
@@ -44,8 +43,6 @@ export class ServiceContainer {
   private constructor() {
     // Initialize database connection and repositories
     const prisma = new PrismaClient();
-    this.userRepository = new UserRepository(prisma);
-
     // Initialize external services
     this.aiService = new AIService(process.env.OPENAI_API_KEY);
     this.eventBus = new EventBus();
