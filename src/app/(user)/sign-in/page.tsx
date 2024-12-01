@@ -29,6 +29,7 @@ const SignInPage = async ({ searchParams }: SignInPageProps) => {
             "use server";
             try {
               await signIn("credentials", formData);
+              redirect("/service-report-parser");
             } catch (error) {
               if (
                 !(
