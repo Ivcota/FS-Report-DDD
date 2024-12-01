@@ -1,9 +1,9 @@
 import { ClientUser } from "@/module/user/application/use_cases/authorize_user/authorize_user_dtos";
-import { Email } from "@/module/shared/domain/value_objects/email";
-import { Name } from "@/module/shared/domain/value_objects/name";
-import { Password } from "@/module/user/domain/value_objects/password";
+import { Email } from "@/module/shared/domain/value_objects/Email";
+import { Name } from "@/module/shared/domain/value_objects/Name";
+import { Password } from "@/module/user/domain/value_objects/Password";
 import { User as PrismaUser } from "@prisma/client";
-import { Role } from "@/module/user/domain/value_objects/role";
+import { Role } from "@/module/user/domain/value_objects/Role";
 import { User } from "@/module/user/domain/entities/User";
 
 export class UserMapper {

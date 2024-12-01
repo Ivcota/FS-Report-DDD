@@ -1,6 +1,6 @@
-import { Email } from "@/module/shared/domain/value_objects/email";
+import { Email } from "@/module/shared/domain/value_objects/Email";
 import { Entity } from "@/module/shared/domain/entity";
-import { Name } from "@/module/shared/domain/value_objects/name";
+import { Name } from "@/module/shared/domain/value_objects/Name";
 import { v4 as uuidv4 } from "uuid";
 
 type PublisherProps = {
