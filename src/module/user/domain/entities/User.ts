@@ -12,7 +12,7 @@ export class User extends AggregateRoot {
     public email: Email,
     public password: Password,
     public name: Name,
-    public role: Role = Role.create("user"),
+    public role: Role,
     public createdAt: Date
   ) {
     super(id);
