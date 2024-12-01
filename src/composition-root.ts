@@ -26,7 +26,7 @@ export class CompositionRoot {
   private aiService: AIService;
 
   /** Event bus for handling domain events */
-  eventBus: IEventBus;
+  private eventBus: IEventBus;
 
   /** Module for service report operations */
   serviceReportModule: ServiceReportModule;
