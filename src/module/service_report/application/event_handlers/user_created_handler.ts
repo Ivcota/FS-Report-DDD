@@ -9,7 +9,7 @@ export class UserCreatedHandler implements EventHandler<UserCreatedEvent> {
   async handle(event: UserCreatedEvent): Promise<void> {
     const fieldServiceGroup = await this.createFieldServiceGroupUseCase.execute(
       {
-        name: `${event.user.firstName} ${event.user.lastName} Field Service Group`,
+        name: `${event.user.name.firstName} ${event.user.name.lastName} Field Service Group`,
         userOwnerId: event.user.id,
       }
     );
@@ -19,7 +19,7 @@ export class UserCreatedHandler implements EventHandler<UserCreatedEvent> {
     }
 
     console.log(
-      `Field Service Group created for ${event.user.firstName} ${event.user.lastName}: ${fieldServiceGroup.fieldServiceGroup?.id}`
+      `Field Service Group created for ${event.user.name.firstName} ${event.user.name.lastName}: ${fieldServiceGroup.fieldServiceGroup?.id}`
     );
   }
 }

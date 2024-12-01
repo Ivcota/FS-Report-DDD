@@ -1,6 +1,6 @@
 import { AggregateRoot } from "@/module/shared/domain/aggregate_root";
-import { Month } from "../value_objects/month";
-import { Publisher } from "./publisher";
+import { Month } from "@/module/service_report/domain/value_objects/month";
+import { Publisher } from "@/module/service_report/domain/entities/publisher";
 import { v4 as uuidv4 } from "uuid";
 
 type ServiceRecordProps = {
@@ -66,19 +66,15 @@ export class ServiceRecord extends AggregateRoot {
       throw new Error("Bible studies cannot be negative");
     }
 
-    if (input.creditHours && input.creditHours < 0) {
-      throw new Error("Credit hours cannot be negative");
-    }
-
-    if (input.serviceHours && input.serviceHours < 0) {
-      throw new Error("Service hours cannot be negative");
-    }
-
     if (!input.serviceMonth) {
       throw new Error("Service month is required");
     }
 
-    return new ServiceRecord(input);
+    return new ServiceRecord({
+      ...input,
+      creditHours: input.creditHours ?? undefined,
+      serviceHours: input.serviceHours ?? undefined,
+    });
   }
 
   assignPublisher(publisher: Publisher): void {

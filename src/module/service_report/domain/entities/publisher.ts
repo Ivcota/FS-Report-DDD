@@ -1,27 +1,27 @@
+import { Email } from "@/module/shared/domain/value_objects/email";
 import { Entity } from "@/module/shared/domain/entity";
+import { Name } from "@/module/shared/domain/value_objects/name";
 import { v4 as uuidv4 } from "uuid";
 
 type PublisherProps = {
   id?: string;
   firstName: string;
-  lastName: string;
+  lastName?: string;
   email?: string;
   phoneNumber?: string;
   createdAt?: Date;
 };
 
 export class Publisher extends Entity {
-  firstName: string;
-  lastName: string;
-  email?: string;
+  name: Name;
+  email?: Email;
   phoneNumber?: string;
   createdAt: Date;
 
   private constructor(input: PublisherProps) {
     super(input.id ?? uuidv4());
-    this.firstName = input.firstName;
-    this.lastName = input.lastName;
-    this.email = input.email;
+    this.name = Name.create(input.firstName, input.lastName);
+    this.email = input.email ? Email.create(input.email) : undefined;
     this.phoneNumber = input.phoneNumber;
     this.createdAt = input.createdAt ?? new Date();
   }

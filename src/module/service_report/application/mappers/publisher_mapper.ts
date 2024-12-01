@@ -5,9 +5,9 @@ export class PublisherMapper {
   static toPersistence(publisher: Publisher): PrismaPublisher {
     return {
       id: publisher.id,
-      firstName: publisher.firstName,
-      lastName: publisher.lastName,
-      email: publisher.email ?? null,
+      firstName: publisher.name.firstName,
+      lastName: publisher.name.lastName ?? "placeholder-foo",
+      email: publisher.email?.value ?? null,
       phoneNumber: publisher.phoneNumber ?? null,
       createdAt: publisher.createdAt,
     };
@@ -17,7 +17,10 @@ export class PublisherMapper {
     return Publisher.create({
       id: publisher.id,
       firstName: publisher.firstName,
-      lastName: publisher.lastName,
+      lastName:
+        publisher.lastName === "placeholder-foo"
+          ? undefined
+          : publisher.lastName,
       email: publisher.email ?? undefined,
       phoneNumber: publisher.phoneNumber ?? undefined,
       createdAt: publisher.createdAt,

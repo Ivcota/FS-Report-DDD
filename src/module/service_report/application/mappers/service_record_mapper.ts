@@ -100,8 +100,8 @@ export class ServiceRecordMapper {
   ): SimplifiedServiceRecord {
     return {
       id: serviceRecord.id,
-      firstName: serviceRecord.publisher?.firstName ?? "",
-      lastName: serviceRecord.publisher?.lastName ?? "",
+      firstName: serviceRecord.publisher?.name.firstName ?? "",
+      lastName: serviceRecord.publisher?.name.lastName ?? "placeholder-foo",
       serviceMonth: serviceRecord.serviceMonth.monthStart.toISOString(),
       createdAt: serviceRecord.createdAt.toISOString(),
       bibleStudies: serviceRecord.bibleStudies,

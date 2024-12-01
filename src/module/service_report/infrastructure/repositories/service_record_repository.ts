@@ -31,11 +31,11 @@ export class ServiceRecordRepository implements IServiceRecordRepository {
         existingPublisher = await this.prisma.publisher.findFirst({
           where: {
             firstName: {
-              equals: serviceRecord.publisher.firstName,
+              equals: serviceRecord.publisher.name.firstName,
               mode: "insensitive",
             },
             lastName: {
-              equals: serviceRecord.publisher.lastName,
+              equals: serviceRecord.publisher.name.lastName,
               mode: "insensitive",
             },
           },

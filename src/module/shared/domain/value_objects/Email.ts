@@ -1,5 +1,5 @@
 export class Email {
-  static create(email: string): Email {
+  static create(email?: string): Email {
     if (!email) {
       throw new Error("Invalid email");
     }
