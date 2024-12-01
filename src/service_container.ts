@@ -23,7 +23,7 @@ export class ServiceContainer {
   private static instance: ServiceContainer;
 
   /** Service for AI-related operations */
-  aiService: AIService;
+  private aiService: AIService;
 
   /** Event bus for handling domain events */
   eventBus: IEventBus;
