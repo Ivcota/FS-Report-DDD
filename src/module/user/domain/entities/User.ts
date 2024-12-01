@@ -1,8 +1,8 @@
 import { AggregateRoot } from "@/module/shared/domain/aggregate_root";
-import { Email } from "../value_objects/Email";
-import { Name } from "../value_objects/Name";
-import { Password } from "../value_objects/Password";
-import { Role } from "../value_objects/Role";
+import { Email } from "@/module/shared/domain/value_objects/Email";
+import { Name } from "@/module/shared/domain/value_objects/Name";
+import { Password } from "@/module/user/domain/value_objects/Password";
+import { Role } from "@/module/user/domain/value_objects/Role";
 import { UserCreatedEvent } from "../events/user_created_event";
 import { v4 as uuidv4 } from "uuid";
 
