@@ -7,7 +7,8 @@ export interface IServiceRecordRepository {
   findByPublisherId(publisherId: string): Promise<ServiceRecord[]>;
   findByMonth(month: Month): Promise<ServiceRecord[]>;
   findAllEmptyAndPopulatedRecordsForGivenMonth(
-    month: Month
+    month: Month,
+    fieldServiceGroupId?: string
   ): Promise<ServiceRecord[]>;
   delete(id: string): Promise<void>;
 }

@@ -52,7 +52,8 @@ export class ServiceReportModule {
       this.fieldServiceGroupRepository
     );
     this.viewWorkstationMonthUseCase = new ViewWorkstationMonthUseCase(
-      this.serviceRecordRepository
+      this.serviceRecordRepository,
+      this.fieldServiceGroupRepository
     );
   }
 

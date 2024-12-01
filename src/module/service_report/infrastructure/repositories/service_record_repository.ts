@@ -76,13 +76,22 @@ export class ServiceRecordRepository implements IServiceRecordRepository {
   }
 
   async findAllEmptyAndPopulatedRecordsForGivenMonth(
-    month: Month
+    month: Month,
+    fieldServiceGroupId: string
   ): Promise<ServiceRecord[]> {
     const serviceRecords = await this.prisma.serviceRecord.findMany({
-      where: { serviceMonth: month.monthStart },
+      where: { serviceMonth: month.monthStart, fieldServiceGroupId },
     });
 
-    const publishers = await this.prisma.publisher.findMany();
+    const publishers = await this.prisma.publisher.findMany({
+      where: {
+        serviceRecords: {
+          some: {
+            fieldServiceGroupId,
+          },
+        },
+      },
+    });
 
     const populatedRecords = serviceRecords.filter(
       (serviceRecord) => serviceRecord.publisherId !== null

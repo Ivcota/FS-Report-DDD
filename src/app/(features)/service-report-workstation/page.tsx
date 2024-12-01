@@ -21,16 +21,17 @@ const ServiceReportWorkstation = async ({
 
   const userId = session?.user?.id;
 
+  if (userId === undefined) {
+    return <div>Not authenticated</div>;
+  }
+
   const { results, error } = await viewWorkstationMonthUseCase.execute({
     monthStart: monthParam,
+    userId: userId,
   });
 
   if (error) {
     return <div>{error}</div>;
-  }
-
-  if (userId === undefined) {
-    return <div>Not authenticated</div>;
   }
 
   return (

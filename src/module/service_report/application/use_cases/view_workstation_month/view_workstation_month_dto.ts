@@ -2,6 +2,7 @@ import { ServiceRecord } from "@/module/service_report/domain/entities/service_r
 
 export type ViewWorkstationMonthUseCaseInputDTO = {
   monthStart: string;
+  userId: string;
 };
 
 export type ViewWorkstationMonthUseCaseOutputDTO = {
