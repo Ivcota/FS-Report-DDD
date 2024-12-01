@@ -1,9 +1,10 @@
 "use server";
 
-import { CompositionRoot } from "@/composition-root";
+import { CompositionRoot } from "@/composition_root";
+import { config } from "@/config";
 import { revalidatePath } from "next/cache";
 
-const serviceContainer = CompositionRoot.getInstance();
+const serviceContainer = CompositionRoot.getInstance(config);
 
 type ActionState = {
   success: boolean;

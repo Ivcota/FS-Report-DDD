@@ -1,9 +1,10 @@
 "use server";
 
-import { CompositionRoot } from "@/composition-root";
+import { CompositionRoot } from "@/composition_root";
 import { SimplifiedServiceRecord } from "./parse-service_records_dto";
+import { config } from "@/config";
 
-const serviceContainer = CompositionRoot.getInstance();
+const serviceContainer = CompositionRoot.getInstance(config);
 
 type ActionState = {
   serviceRecords: SimplifiedServiceRecord[];

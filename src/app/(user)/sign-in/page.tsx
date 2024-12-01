@@ -29,7 +29,6 @@ const SignInPage = async ({ searchParams }: SignInPageProps) => {
             "use server";
             try {
               await signIn("credentials", formData);
-              redirect("/service-report-parser");
             } catch (error) {
               if (
                 !(
@@ -39,6 +38,7 @@ const SignInPage = async ({ searchParams }: SignInPageProps) => {
               ) {
                 redirect("/sign-in?error=true");
               }
+              redirect("/service-report-parser");
             }
           }}
         >

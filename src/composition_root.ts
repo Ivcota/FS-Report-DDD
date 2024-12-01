@@ -6,6 +6,7 @@
 import { EventBus, IEventBus } from "./module/shared/domain/events/event_bus";
 
 import { AIService } from "./module/shared/infrastructure/external_services/ai";
+import { Config } from "./config";
 import { PrismaClient } from "@prisma/client";
 import { ServiceReportModule } from "./module/service_report/service_report.module";
 import { UserModule } from "./module/user/user.module";
@@ -40,11 +41,11 @@ export class CompositionRoot {
    *
    * @private
    */
-  private constructor() {
+  private constructor(config: Config) {
     // Initialize database connection and repositories
     const prisma = new PrismaClient();
     // Initialize external services
-    this.aiService = new AIService(process.env.OPENAI_API_KEY);
+    this.aiService = new AIService(config.OPENAI_API_KEY);
     this.eventBus = new EventBus();
 
     this.serviceReportModule = new ServiceReportModule(prisma, this.aiService);
@@ -62,9 +63,9 @@ export class CompositionRoot {
    * @returns {CompositionRoot} The singleton instance of CompositionRoot
    * @static
    */
-  static getInstance(): CompositionRoot {
+  static getInstance(config: Config): CompositionRoot {
     if (!CompositionRoot.instance) {
-      CompositionRoot.instance = new CompositionRoot();
+      CompositionRoot.instance = new CompositionRoot(config);
     }
     return CompositionRoot.instance;
   }

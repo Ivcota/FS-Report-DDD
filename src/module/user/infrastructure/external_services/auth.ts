@@ -1,9 +1,10 @@
 import { AuthorizeUserInputDTO } from "@/module/user/application/use_cases/authorize_user/authorize_user_dtos";
-import { CompositionRoot } from "@/composition-root";
+import { CompositionRoot } from "@/composition_root";
 import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth from "next-auth";
+import { config } from "@/config";
 
-const serviceContainer = CompositionRoot.getInstance();
+const serviceContainer = CompositionRoot.getInstance(config);
 
 const authorizeUserUseCase =
   serviceContainer.userModule.getAuthorizeUserUseCase();

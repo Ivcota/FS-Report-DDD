@@ -1,12 +1,14 @@
 import { describe, expect, it } from "vitest";
 
-import { CompositionRoot } from "@/composition-root";
-import { ParseServiceRecordsUseCase } from "@/module/service_report/application/use_cases/parse_service_records/parse_service_records_use_case";
+import { CompositionRoot } from "@/composition_root";
+import { Config } from "@/config";
 
 describe("ParseServiceRecordsUseCase", () => {
-  const serviceContainer = CompositionRoot.getInstance();
-  const aiService = serviceContainer.aiService;
-  const parseServiceRecordsUseCase = new ParseServiceRecordsUseCase(aiService);
+  const config = new Config("start:test");
+  const serviceContainer = CompositionRoot.getInstance(config);
+
+  const parseServiceRecordsUseCase =
+    serviceContainer.serviceReportModule.getParseServiceRecordsUseCase();
 
   it("should return an error if the AI service returns an error", async () => {
     const result = await parseServiceRecordsUseCase.execute({

@@ -1,14 +1,15 @@
-import { CompositionRoot } from "@/composition-root";
+import { CompositionRoot } from "@/composition_root";
 import { ServiceRecordMapper } from "@/module/service_report/application/mappers/service_record_mapper";
 import { WorkstationCard } from "@/app/ui/service_report/workstation/WorkstationCard";
 import WorkstationForm from "@/app/ui/service_report/workstation/WorkstationForm";
 import { auth } from "@/module/user/infrastructure/external_services/auth";
+import { config } from "@/config";
 import dayjs from "dayjs";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ServiceReportWorkstationProps = any;
 
-const serviceContainer = CompositionRoot.getInstance();
+const serviceContainer = CompositionRoot.getInstance(config);
 const viewWorkstationMonthUseCase =
   serviceContainer.serviceReportModule.getViewWorkstationMonthUseCase();
 
