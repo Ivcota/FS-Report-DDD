@@ -8,7 +8,7 @@ export const SignOut = () => {
         await signOut();
       }}
     >
-      <button className="text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-colors">
+      <button className="text-gray-600 hover:text-gray-900 px-2 py-2 text-sm font-medium lg:text-base">
         Sign Out
       </button>
     </form>
