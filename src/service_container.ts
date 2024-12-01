@@ -9,6 +9,7 @@ import { AIService } from "./module/shared/infrastructure/external_services/ai";
 import { IUserRepository } from "@/module/user/domain/infra_ports/user_repository";
 import { PrismaClient } from "@prisma/client";
 import { ServiceReportModule } from "./module/service_report/service_report.module";
+import { UserModule } from "./module/user/user.module";
 import { UserRepository } from "@/module/user/infrastructure/repositories/user_repository";
 import { registerUserEvents } from "./module/user/infrastructure/events/register_user_events";
 import { registerUserEvents as registerUserEventsServiceReport } from "@/module/service_report/infrastructure/events/register_user_events";
@@ -24,7 +25,7 @@ export class ServiceContainer {
   private static instance: ServiceContainer;
 
   serviceReportModule: ServiceReportModule;
-
+  userModule: UserModule;
   /** Repository for managing users */
   userRepository: IUserRepository;
 
@@ -50,6 +51,7 @@ export class ServiceContainer {
     this.eventBus = new EventBus();
 
     this.serviceReportModule = new ServiceReportModule(prisma, this.aiService);
+    this.userModule = new UserModule(prisma, this.eventBus);
 
     // Register event handlers for domain events
     // Must be called after all dependencies are initialized since handlers may depend on repositories/services

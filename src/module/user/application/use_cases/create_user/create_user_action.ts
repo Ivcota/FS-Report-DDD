@@ -10,10 +10,7 @@ type ActionState = {
   error?: string;
 };
 const serviceContainer = ServiceContainer.getInstance();
-const createUserUseCase = new CreateUserUseCase(
-  serviceContainer.userRepository,
-  serviceContainer.eventBus
-);
+const createUserUseCase = serviceContainer.userModule.getCreateUserUseCase();
 
 export const createUserAction = async (
   _prevState: ActionState,

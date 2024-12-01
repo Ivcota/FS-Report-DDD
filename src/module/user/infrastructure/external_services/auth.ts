@@ -1,13 +1,12 @@
 import { AuthorizeUserInputDTO } from "@/module/user/application/use_cases/authorize_user/authorize_user_dtos";
-import { AuthorizeUserUseCase } from "@/module/user/application/use_cases/authorize_user/authorize_user_use_case";
 import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth from "next-auth";
 import { ServiceContainer } from "@/service_container";
 
 const serviceContainer = ServiceContainer.getInstance();
-const userRepository = serviceContainer.userRepository;
 
-const authorizeUserUseCase = new AuthorizeUserUseCase(userRepository);
+const authorizeUserUseCase =
+  serviceContainer.userModule.getAuthorizeUserUseCase();
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
