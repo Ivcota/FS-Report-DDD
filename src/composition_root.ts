@@ -3,11 +3,8 @@
  * This container handles the initialization and management of repositories, services, and event handlers.
  */
 
-import { EventBus, IEventBus } from "./module/shared/domain/events/event_bus";
-
-import { AIService } from "./module/shared/infrastructure/external_services/ai";
 import { Config } from "./config";
-import { PrismaClient } from "@prisma/client";
+import { IEventBus } from "./module/shared/domain/events/event_bus";
 import { ServiceReportModule } from "./module/service_report/service_report.module";
 import { SharedModule } from "./module/shared/shared.module";
 import { UserModule } from "./module/user/user.module";
