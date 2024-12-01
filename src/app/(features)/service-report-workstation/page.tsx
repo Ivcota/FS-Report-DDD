@@ -17,7 +17,7 @@ const ServiceReportWorkstation = async ({
   searchParams,
 }: ServiceReportWorkstationProps) => {
   const session = await auth();
-  const monthParam = searchParams.month ?? dayjs().format("YYYY-MM-DD");
+  const monthParam = (await searchParams).month ?? dayjs().format("YYYY-MM-DD");
 
   const userId = session?.user?.id;
 
