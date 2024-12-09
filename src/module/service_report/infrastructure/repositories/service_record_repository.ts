@@ -20,48 +20,22 @@ export class ServiceRecordRepository implements IServiceRecordRepository {
   }
 
   async save(serviceRecord: ServiceRecord): Promise<void> {
-    let publisherId = serviceRecord.publisher?.id;
+    const serviceRecordData = ServiceRecordMapper.toPersistence(serviceRecord);
 
-    if (serviceRecord.publisher) {
-      let existingPublisher = await this.prisma.publisher.findUnique({
-        where: { id: serviceRecord.publisher.id },
-      });
-
-      if (!existingPublisher) {
-        existingPublisher = await this.prisma.publisher.findFirst({
-          where: {
-            firstName: {
-              equals: serviceRecord.publisher.name.firstName,
-              mode: "insensitive",
-            },
-            lastName: {
-              equals: serviceRecord.publisher.name.lastName,
-              mode: "insensitive",
-            },
-          },
-        });
-      }
-
-      if (existingPublisher) {
-        publisherId = existingPublisher.id;
-      } else {
-        const newPublisher = await this.prisma.publisher.create({
-          data: PublisherMapper.toPersistence(serviceRecord.publisher),
-        });
-        publisherId = newPublisher.id;
-      }
-    }
-
-    const serviceRecordData = {
-      ...ServiceRecordMapper.toPersistence(serviceRecord),
-      publisherId,
-    };
-
-    await this.prisma.serviceRecord.upsert({
+    const existingServiceRecord = await this.prisma.serviceRecord.findUnique({
       where: { id: serviceRecord.id },
-      update: serviceRecordData,
-      create: serviceRecordData,
     });
+
+    if (existingServiceRecord) {
+      await this.prisma.serviceRecord.update({
+        where: { id: serviceRecord.id },
+        data: serviceRecordData,
+      });
+    } else {
+      await this.prisma.serviceRecord.create({
+        data: serviceRecordData,
+      });
+    }
   }
 
   async findByMonth(month: Month): Promise<ServiceRecord[]> {
