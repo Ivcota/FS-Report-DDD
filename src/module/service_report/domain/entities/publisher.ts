@@ -1,5 +1,5 @@
+import { AggregateRoot } from "@/module/shared/domain/aggregate_root";
 import { Email } from "@/module/shared/domain/value_objects/Email";
-import { Entity } from "@/module/shared/domain/entity";
 import { Name } from "@/module/shared/domain/value_objects/Name";
 import { v4 as uuidv4 } from "uuid";
 
@@ -12,7 +12,7 @@ type PublisherProps = {
   createdAt?: Date;
 };
 
-export class Publisher extends Entity {
+export class Publisher extends AggregateRoot {
   name: Name;
   email?: Email;
   phoneNumber?: string;
