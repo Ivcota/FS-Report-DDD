@@ -20,30 +20,55 @@ A modern web application for managing and analyzing field service reports. Built
 - **AI Integration**: OpenAI API for advanced parsing capabilities
 - **Architecture**: Domain-Driven Design (DDD)
 
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- **Node.js** (v20 or higher)
+- **npm** (comes with Node.js)
+- **Docker** and **Docker Compose** (for local database)
+- **OpenAI API Key** (for service report parsing features)
+
 ## Getting Started
 
 1. Clone the repository
+
 2. Install dependencies:
 
 ```bash
-bun install
+npm install
 ```
 
 3. Set up your environment variables:
 
+Create a `.env` file in the root directory with the following variables:
+
 ```bash
-# Create a .env file with the following variables
-DATABASE_URL="your_postgresql_url"
+# Database Configuration (for local development with Docker)
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/fs_report_db"
+
+# OpenAI API (for service report parsing)
 OPENAI_API_KEY="your_openai_api_key"
+
+# NextAuth Configuration
+NEXTAUTH_SECRET="your_nextauth_secret_key"
+NEXTAUTH_URL="http://localhost:3000"
 ```
 
 4. Run the startup script to initialize the database and start the development server:
 
 ```bash
-bun run startup
+npm run startup
 ```
 
-Or start the development server manually:
+This will:
+- Start PostgreSQL using Docker Compose
+- Run Prisma database migrations
+- Start the Next.js development server
+
+> **Note**: Use `npm run startup -- --reset` to reset the database and start fresh.
+
+Alternatively, you can start the development server manually:
 
 ```bash
 npm run dev
@@ -53,12 +78,31 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Development
 
-- `npm run dev` - Start the development server
+### Available Scripts
+
+- `npm run dev` - Start the development server with Turbopack
 - `npm run build` - Build the application for production
 - `npm run start` - Start the production server
-- `npm run test` - Run tests
-- `npm run lint` - Run linting
+- `npm run test` - Run tests with Vitest
+- `npm run test:watch` - Run tests in watch mode
 - `npm run coverage` - Generate test coverage report
+- `npm run lint` - Run ESLint
+- `npm run startup` - Full startup script (Docker + DB + Dev server)
+- `npm run db:migrate` - Run Prisma migrations
+- `npm run db:generate` - Generate Prisma client
+- `npm run build:deploy` - Build script for deployment
+
+### Docker Setup
+
+The project includes a Docker Compose configuration for running PostgreSQL locally:
+
+```bash
+docker compose up -d    # Start database
+docker compose down     # Stop database
+docker compose down --volumes  # Stop and remove database volumes
+```
+
+The startup script (`npm run startup`) handles this automatically.
 
 ## Project Structure
 
@@ -67,8 +111,11 @@ The project follows a Domain-Driven Design architecture, organized into bounded 
 ### Core Structure
 
 - `/src/app` - Next.js application routes and pages
+  - `/(features)` - Feature routes (parser, workstation)
+  - `/(user)` - User authentication pages
+  - `/api` - API routes including NextAuth
+  - `/ui` - Reusable UI components
 - `/src/module` - Core business logic modules organized by domain
-- `/src/ui` - Reusable UI components
 - `/prisma` - Database schema and migrations
 
 ### Domain Modules
