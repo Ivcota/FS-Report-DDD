@@ -1,4 +1,4 @@
-#!/rbin/bash
+#!/bin/bash
 
 handle_error() {
   echo "❌ An error occurred. Exiting."
